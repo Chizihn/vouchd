@@ -35,6 +35,17 @@ app.use(
 );
 app.use(express.json());
 
+// Root endpoint for UptimeRobot / Render health checks
+app.get("/", (_req, res) => {
+  res.json({ 
+    name: "Vouchd API",
+    status: "ok", 
+    version: "1.0.0",
+    graphql: "/graphql",
+    timestamp: new Date().toISOString() 
+  });
+});
+
 // Health check
 app.get("/health", (_req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });

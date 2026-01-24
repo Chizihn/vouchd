@@ -7,7 +7,7 @@ import { useAuthStore } from "@/store/auth";
 const { width } = Dimensions.get("window");
 
 export default function Index() {
-  const { isAuthenticated, isLoading } = useAuthStore();
+  const { isAuthenticated, isLoading, hasOnboarded } = useAuthStore();
 
   if (isLoading) {
     return (
@@ -25,6 +25,10 @@ export default function Index() {
 
   if (isAuthenticated) {
     return <Redirect href={"/(tabs)" as any} />;
+  }
+
+  if (!hasOnboarded) {
+    return <Redirect href="/welcome" />;
   }
 
   return (

@@ -3,7 +3,9 @@ import { setContext } from "@apollo/client/link/context";
 import * as SecureStore from "expo-secure-store";
 
 const httpLink = createHttpLink({
-  uri: process.env.EXPO_PUBLIC_API_URL || "http://10.253.158.2:4000/graphql",
+  uri:
+    process.env.EXPO_PUBLIC_API_URL ||
+    "https://vouchd-api.onrender.com/graphql",
 });
 
 const authLink = setContext(async (_, { headers }) => {

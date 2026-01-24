@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Dimensions, Animated } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Link, Redirect } from "expo-router";
+import { Link, Redirect, useRouter } from "expo-router";
 import { useAuthStore } from "@/store/auth";
 
 const { width } = Dimensions.get("window");
@@ -28,13 +28,19 @@ const ONBOARDING_PAGES = [
 ];
 
 export default function WelcomeScreen() {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, setOnboarded } = useAuthStore();
+  const router = useRouter();
   const scrollRef = useRef<ScrollView>(null);
   const [currentPage, setCurrentPage] = useState(0);
 
   if (isAuthenticated) {
     return <Redirect href="/(tabs)" />;
   }
+
+  const handleFinishOnboarding = async (target: any = "/auth/connect-wallet") => {
+    await setOnboarded();
+    router.push(target);
+  };
 
   const handleScroll = (event: any) => {
     const page = Math.round(event.nativeEvent.contentOffset.x / width);
@@ -53,11 +59,12 @@ export default function WelcomeScreen() {
       {/* Header */}
       <View className="pt-16 px-6 flex-row justify-between items-center">
         <Text className="text-2xl font-black text-white">Vouchd</Text>
-        <Link href="/auth/connect-wallet" asChild>
-          <TouchableOpacity className="bg-white/10 border border-white/20 px-4 py-2 rounded-full">
-            <Text className="text-white text-sm font-semibold">Skip</Text>
-          </TouchableOpacity>
-        </Link>
+        <TouchableOpacity 
+          onPress={() => handleFinishOnboarding("/")}
+          className="bg-white/10 border border-white/20 px-4 py-2 rounded-full"
+        >
+          <Text className="text-white text-sm font-semibold">Skip</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Carousel */}
@@ -113,27 +120,26 @@ export default function WelcomeScreen() {
 
       {/* Bottom Actions */}
       <View className="px-6 pb-10">
-        <Link href="/auth/connect-wallet" asChild>
-          <TouchableOpacity className="w-full mb-4">
-            <LinearGradient
-              colors={["#6366f1", "#8b5cf6"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              className="rounded-2xl py-5 items-center"
-              style={{ shadowColor: '#6366f1', shadowRadius: 20, shadowOpacity: 0.5 }}
-            >
-              <Text className="text-white font-bold text-lg">Get Started</Text>
-            </LinearGradient>
-          </TouchableOpacity>
-        </Link>
+        <TouchableOpacity 
+          onPress={() => handleFinishOnboarding()}
+          className="w-full mb-4"
+        >
+          <LinearGradient
+            colors={["#6366f1", "#8b5cf6"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            className="rounded-2xl py-5 items-center"
+            style={{ shadowColor: '#6366f1', shadowRadius: 20, shadowOpacity: 0.5 }}
+          >
+            <Text className="text-white font-bold text-lg">Get Started</Text>
+          </LinearGradient>
+        </TouchableOpacity>
 
         <View className="flex-row justify-center items-center">
           <Text className="text-white/30 text-sm">Already have a wallet? </Text>
-          <Link href="/auth/connect-wallet" asChild>
-            <TouchableOpacity>
-              <Text className="text-blue-400 text-sm font-semibold">Connect Now</Text>
-            </TouchableOpacity>
-          </Link>
+          <TouchableOpacity onPress={() => handleFinishOnboarding()}>
+            <Text className="text-blue-400 text-sm font-semibold">Connect Now</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </LinearGradient>

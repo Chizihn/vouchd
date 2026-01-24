@@ -31,6 +31,7 @@ interface AuthState {
   token: string | null;
   isLoading: boolean;
   isAuthenticated: boolean;
+  hasOnboarded: boolean;
   walletProvider: string | null;
   walletProviderName: string | null;
 
@@ -39,6 +40,7 @@ interface AuthState {
   login: (user: User, token: string) => Promise<void>;
   logout: () => Promise<void>;
   loadStoredAuth: () => Promise<void>;
+  setOnboarded: () => Promise<void>;
   setWalletProvider: (
     providerUri: string | null,
     name: string | null,
@@ -50,6 +52,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   token: null,
   isLoading: true,
   isAuthenticated: false,
+  hasOnboarded: false,
   walletProvider: null,
   walletProviderName: null,
 
@@ -67,7 +70,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   login: async (user, token) => {
     await SecureStore.setItemAsync("authToken", token);
     await SecureStore.setItemAsync("user", JSON.stringify(user));
-    set({ user, token, isAuthenticated: true, isLoading: false });
+    set({ user, token, isAuthenticated: true, isLoading: false, hasOnboarded: true });
   },
 
   logout: async () => {
@@ -78,10 +81,16 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ user: null, token: null, isAuthenticated: false });
   },
 
+  setOnboarded: async () => {
+    await SecureStore.setItemAsync("has_onboarded", "true");
+    set({ hasOnboarded: true });
+  },
+
   loadStoredAuth: async () => {
     try {
       const token = await SecureStore.getItemAsync("authToken");
       const userStr = await SecureStore.getItemAsync("user");
+      const hasOnboarded = await SecureStore.getItemAsync("has_onboarded");
       const walletProviderName = await SecureStore.getItemAsync(
         "wallet_provider_name",
       );
@@ -96,12 +105,14 @@ export const useAuthStore = create<AuthState>((set) => ({
           token,
           walletProvider,
           walletProviderName,
+          hasOnboarded: hasOnboarded === "true",
           isAuthenticated: true,
           isLoading: false,
         });
       } else {
         set({
           isLoading: false,
+          hasOnboarded: hasOnboarded === "true",
           walletProvider: walletProvider ?? null,
           walletProviderName: walletProviderName ?? null,
         });

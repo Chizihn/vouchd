@@ -1,0 +1,286 @@
+// This is your Prisma schema file
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String    @id @default(uuid())
+  walletAddress   String    @unique
+  
+  // FairScale Data
+  fairScore       Int?      // Overall composite score (0-5 stars or numerical)
+  pillars         Json?     // Economy, Risk, Activity, Diversification, Social breakdown
+  walletScore     Int?      // On-chain behavior score
+  socialScore     Int?      // Social signal score
+  fairTier        String?   // UNVERIFIED, BRONZE, SILVER, GOLD, DIAMOND
+  fairBadges      String[]  @default([])
+  lastScoreUpdate DateTime?
+  
+  // Profile
+  email           String?
+  phoneNumber     String?
+  username        String?
+  bio             String?
+  profileImage    String?
+  
+  // Verification
+  kycVerified     Boolean   @default(false)
+  kycDocument     Json?
+  emailVerified   Boolean   @default(false)
+  phoneVerified   Boolean   @default(false)
+  
+  // Stats
+  totalTrades     Int       @default(0)
+  completedTrades Int       @default(0)
+  cancelledTrades Int       @default(0)
+  disputedTrades  Int       @default(0)
+  averageRating   Decimal   @default(0) @db.Decimal(3, 2)
+  
+  // Status
+  isActive        Boolean   @default(true)
+  isBanned        Boolean   @default(false)
+  banReason       String?
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  // Flash Trust
+  flashTrustExpiresAt DateTime?
+  flashTrustTier      String?
+  
+  // Relations
+  offersCreated   Offer[]        @relation("OfferSeller")
+  tradesBought    Trade[]        @relation("TradeBuyer")
+  tradesSold      Trade[]        @relation("TradeSeller")
+  messagesSent    Message[]      @relation("MessageSender")
+  ratingsGiven    Rating[]       @relation("RatingFrom")
+  ratingsReceived Rating[]       @relation("RatingTo")
+  paymentMethods  PaymentMethod[]
+  notifications   Notification[]
+  
+  @@index([walletAddress])
+  @@index([fairScore])
+  @@index([fairTier])
+}
+
+model Offer {
+  id              String    @id @default(uuid())
+  
+  // Seller Info
+  sellerId        String
+  seller          User      @relation("OfferSeller", fields: [sellerId], references: [id], onDelete: Cascade)
+  
+  // Crypto Details
+  cryptoAsset     String    // "USDC", "SOL", "BONK"
+  cryptoAmount    Decimal   @db.Decimal(18, 6)
+  
+  // Fiat Details
+  fiatCurrency    String    // "USD", "NGN", "KES", "GHS"
+  fiatAmount      Decimal   @db.Decimal(18, 2)
+  exchangeRate    Decimal   @db.Decimal(18, 6)
+  
+  // Payment
+  paymentMethod   String    // "BANK_TRANSFER", "CASH", "MOBILE_MONEY", "PAYPAL"
+  paymentDetails  Json      // { bankName, accountNumber, etc. }
+  
+  // Limits
+  minLimit        Decimal   @db.Decimal(18, 2)
+  maxLimit        Decimal   @db.Decimal(18, 2)
+  
+  // Location (for cash meetups)
+  location        String?
+  latitude        Decimal?  @db.Decimal(10, 8)
+  longitude       Decimal?  @db.Decimal(11, 8)
+  
+  // Terms
+  terms           String?
+  autoReply       String?
+  timeLimit       Int       @default(1800) // seconds (30 min default)
+  
+  // Status
+  status          String    @default("ACTIVE") // ACTIVE, PAUSED, COMPLETED, EXPIRED
+  viewCount       Int       @default(0)
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  expiresAt       DateTime?
+  
+  // Relations
+  trades          Trade[]
+  
+  @@index([sellerId])
+  @@index([status])
+  @@index([cryptoAsset])
+  @@index([fiatCurrency])
+  @@index([paymentMethod])
+}
+
+model Trade {
+  id                String    @id @default(uuid())
+  
+  // Offer Reference
+  offerId           String
+  offer             Offer     @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  
+  // Parties
+  buyerId           String
+  buyer             User      @relation("TradeBuyer", fields: [buyerId], references: [id], onDelete: Cascade)
+  
+  sellerId          String
+  seller            User      @relation("TradeSeller", fields: [sellerId], references: [id], onDelete: Cascade)
+  
+  // Amounts
+  cryptoAmount      Decimal   @db.Decimal(18, 6)
+  fiatAmount        Decimal   @db.Decimal(18, 2)
+  fee               Decimal   @db.Decimal(18, 6)
+  feePercentage     Decimal   @db.Decimal(5, 4)
+  
+  // Blockchain
+  escrowSignature   String?   // Solana transaction signature for escrow
+  releaseSignature  String?   // Solana transaction signature for release
+  escrowPDA         String?   // Program Derived Address
+  
+  // Status
+  status            String    @default("PENDING") 
+  // PENDING -> ESCROWED -> FIAT_SENT -> COMPLETED
+  // OR -> CANCELLED, DISPUTED, REFUNDED
+  
+  // Timeline
+  escrowedAt        DateTime?
+  fiatSentAt        DateTime?
+  fiatConfirmedAt   DateTime?
+  completedAt       DateTime?
+  cancelledAt       DateTime?
+  disputedAt        DateTime?
+  
+  // Dispute
+  disputeReason     String?
+  disputeEvidence   Json?     // URLs to uploaded files
+  disputeResolution String?
+  disputeResolvedBy String?
+  disputeResolvedAt DateTime?
+  
+  // Auto-cancel timer
+  expiresAt         DateTime?
+  requiresReview    Boolean   @default(false)
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  // Relations
+  messages          Message[]
+  ratings           Rating[]
+  
+  @@index([buyerId])
+  @@index([sellerId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Message {
+  id              String    @id @default(uuid())
+  
+  tradeId         String
+  trade           Trade     @relation(fields: [tradeId], references: [id], onDelete: Cascade)
+  
+  senderId        String
+  sender          User      @relation("MessageSender", fields: [senderId], references: [id], onDelete: Cascade)
+  
+  content         String
+  messageType     String    @default("TEXT") // TEXT, IMAGE, FILE, SYSTEM
+  attachmentUrl   String?
+  
+  isRead          Boolean   @default(false)
+  readAt          DateTime?
+  
+  createdAt       DateTime  @default(now())
+  
+  @@index([tradeId])
+  @@index([senderId])
+  @@index([createdAt])
+}
+
+model Rating {
+  id              String    @id @default(uuid())
+  
+  tradeId         String
+  trade           Trade     @relation(fields: [tradeId], references: [id], onDelete: Cascade)
+  
+  fromUserId      String
+  fromUser        User      @relation("RatingFrom", fields: [fromUserId], references: [id], onDelete: Cascade)
+  
+  toUserId        String
+  toUser          User      @relation("RatingTo", fields: [toUserId], references: [id], onDelete: Cascade)
+  
+  score           Int       // 1-5 stars
+  comment         String?
+  tags            String[]  @default([]) // ["fast", "trustworthy", "good_communication"]
+  
+  createdAt       DateTime  @default(now())
+  
+  @@unique([tradeId, fromUserId])
+  @@index([toUserId])
+}
+
+model PaymentMethod {
+  id              String    @id @default(uuid())
+  
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  type            String    // BANK_TRANSFER, MOBILE_MONEY, CASH, etc.
+  details         Json      // { bankName, accountNumber, accountName, ... }
+  
+  isDefault       Boolean   @default(false)
+  isVerified      Boolean   @default(false)
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([userId])
+}
+
+model Notification {
+  id              String    @id @default(uuid())
+  
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  type            String    // TRADE_MATCHED, PAYMENT_RECEIVED, DISPUTE, etc.
+  title           String
+  message         String
+  data            Json?     // Additional data (tradeId, etc.)
+  
+  isRead          Boolean   @default(false)
+  readAt          DateTime?
+  
+  createdAt       DateTime  @default(now())
+  
+  @@index([userId])
+  @@index([isRead])
+  @@index([createdAt])
+}
+
+model FairScoreHistory {
+  id              String    @id @default(uuid())
+  
+  walletAddress   String
+  fairScore       Int
+  walletScore     Int?
+  socialScore     Int?
+  fairTier        String
+  
+  reason          String?   // "trade_completed", "dispute_loss", etc.
+  
+  createdAt       DateTime  @default(now())
+  
+  @@index([walletAddress])
+  @@index([createdAt])
+}

@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useAuthStore } from "@/store/auth";
+import { AppText } from "@/components/ui/AppText";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
@@ -82,27 +83,27 @@ export default function ProfileScreen() {
                 borderColor: `${tierConfig.color}40`,
               }}
             >
-              <Text className="text-4xl">{tierConfig.icon}</Text>
+              <AppText className="text-4xl">{tierConfig.icon}</AppText>
             </View>
 
             {/* Name & Tier */}
-            <Text className="text-white text-xl font-bold mb-1">
+            <AppText weight="bold" className="text-white text-xl mb-1">
               {user.username || "Anonymous Trader"}
-            </Text>
+            </AppText>
             <View 
               className="px-4 py-1.5 rounded-full flex-row items-center"
               style={{ backgroundColor: `${tierConfig.color}20` }}
             >
-              <Text style={{ color: tierConfig.color }} className="font-bold text-sm">
+              <AppText weight="bold" style={{ color: tierConfig.color }} className="text-sm">
                 {tierKey} • {user.fairScore || 0}
-              </Text>
+              </AppText>
             </View>
 
             {/* Wallet Address */}
             <View className="mt-4 bg-white/5 border border-white/10 px-4 py-2 rounded-full flex-row items-center">
-              <Text className="text-white/40 font-mono text-xs">
+              <AppText variant="caption" className="text-white/40 font-mono">
                 {formatWallet(user.walletAddress)}
-              </Text>
+              </AppText>
               <TouchableOpacity className="ml-2">
                 <Ionicons name="copy-outline" size={14} color="rgba(255,255,255,0.4)" />
               </TouchableOpacity>
@@ -131,22 +132,22 @@ export default function ProfileScreen() {
           {/* Score Breakdown */}
           <View className="px-5 mb-6">
             <View className="bg-white/5 border border-white/10 rounded-2xl p-5">
-              <Text className="text-white font-bold text-lg mb-4">Score Breakdown</Text>
+              <AppText weight="bold" className="text-white text-lg mb-4">Score Breakdown</AppText>
               <View className="flex-row gap-3 mb-3">
                 <View className="flex-1 bg-blue-500/10 rounded-xl p-3 items-center">
-                  <Text className="text-blue-400 text-2xl font-bold">{user.walletScore || 0}</Text>
-                  <Text className="text-white/40 text-xs">Wallet</Text>
+                  <AppText weight="bold" className="text-blue-400 text-2xl">{user.walletScore || 0}</AppText>
+                  <AppText variant="caption" className="text-white/40">Wallet</AppText>
                 </View>
                 <View className="flex-1 bg-purple-500/10 rounded-xl p-3 items-center">
-                  <Text className="text-purple-400 text-2xl font-bold">{user.socialScore || 0}</Text>
-                  <Text className="text-white/40 text-xs">Social</Text>
+                  <AppText weight="bold" className="text-purple-400 text-2xl">{user.socialScore || 0}</AppText>
+                  <AppText variant="caption" className="text-white/40">Social</AppText>
                 </View>
               </View>
               <TouchableOpacity 
                 className="bg-indigo-500/20 border border-indigo-500/30 rounded-xl py-3 items-center"
                 onPress={() => router.push("/profile/boost-score")}
               >
-                <Text className="text-indigo-400 font-bold">Boost Score →</Text>
+                <AppText weight="bold" className="text-indigo-400">Boost Score →</AppText>
               </TouchableOpacity>
             </View>
           </View>
@@ -154,7 +155,7 @@ export default function ProfileScreen() {
           {/* Tier Benefits */}
           <View className="px-5 mb-6">
             <View className="bg-white/5 border border-white/10 rounded-2xl p-5">
-              <Text className="text-white font-bold text-lg mb-4">Your Benefits</Text>
+              <AppText weight="bold" className="text-white text-lg mb-4">Your Benefits</AppText>
               <BenefitRow 
                 label="Max Trade" 
                 value={`$${(capabilities?.maxTradeAmount || 0).toLocaleString()}`}
@@ -215,7 +216,7 @@ export default function ProfileScreen() {
           >
             <View className="flex-row items-center">
               <Ionicons name="log-out-outline" size={20} color="#ef4444" />
-              <Text className="text-red-400 font-bold ml-2">Disconnect Wallet</Text>
+              <AppText weight="bold" className="text-red-400 ml-2">Disconnect Wallet</AppText>
             </View>
           </TouchableOpacity>
         </ScrollView>
@@ -227,9 +228,9 @@ export default function ProfileScreen() {
 function StatCard({ icon, value, label }: { icon: string; value: string; label: string }) {
   return (
     <View className="flex-1 bg-white/5 border border-white/10 rounded-xl p-4 items-center">
-      <Text className="text-xl mb-1">{icon}</Text>
-      <Text className="text-white font-bold text-lg">{value}</Text>
-      <Text className="text-white/40 text-xs">{label}</Text>
+      <AppText className="text-xl mb-1">{icon}</AppText>
+      <AppText weight="bold" className="text-white text-lg">{value}</AppText>
+      <AppText variant="caption" className="text-white/40">{label}</AppText>
     </View>
   );
 }
@@ -237,8 +238,8 @@ function StatCard({ icon, value, label }: { icon: string; value: string; label: 
 function BenefitRow({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
     <View className="flex-row justify-between items-center py-2 border-b border-white/5">
-      <Text className="text-white/60">{label}</Text>
-      <Text className={`font-bold ${highlight ? "text-green-400" : "text-white"}`}>{value}</Text>
+      <AppText className="text-white/60">{label}</AppText>
+      <AppText weight="bold" className={`${highlight ? "text-green-400" : "text-white"}`}>{value}</AppText>
     </View>
   );
 }
@@ -266,8 +267,8 @@ function MenuItem({ icon, label, subtitle, onPress, highlight }: {
           <Ionicons name={icon} size={20} color={highlight ? "#818cf8" : "rgba(255,255,255,0.6)"} />
         </View>
         <View>
-          <Text className={highlight ? "text-white font-bold" : "text-white/80"}>{label}</Text>
-          {subtitle && <Text className="text-white/40 text-xs">{subtitle}</Text>}
+          <AppText className={highlight ? "text-white font-bold" : "text-white/80"}>{label}</AppText>
+          {subtitle && <AppText variant="caption" className="text-white/40">{subtitle}</AppText>}
         </View>
       </View>
       <Ionicons name="chevron-forward" size={16} color="rgba(255,255,255,0.3)" />

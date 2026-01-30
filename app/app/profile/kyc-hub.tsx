@@ -7,6 +7,7 @@ import {
   Alert,
   Linking,
 } from "react-native";
+import { AppText } from "@/components/ui/AppText";
 import { useRouter } from "expo-router";
 import { useAuthStore } from "@/store/auth";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -125,8 +126,8 @@ export default function KYCHubScreen() {
             <Ionicons name="arrow-back" size={24} color="white" />
           </TouchableOpacity>
           <View className="flex-1">
-            <Text className="text-white text-xl font-bold">KYC Hub 🔐</Text>
-            <Text className="text-white/40 text-xs">Link socials to boost your trust</Text>
+            <AppText variant="h3" weight="bold" className="text-white">KYC Hub 🔐</AppText>
+            <AppText variant="caption" className="text-white/40">Link socials to boost your trust</AppText>
           </View>
         </View>
 
@@ -140,15 +141,15 @@ export default function KYCHubScreen() {
           >
             <View className="flex-row items-center justify-between">
               <View>
-                <Text className="text-white/70 text-xs font-bold uppercase tracking-wider">
+                <AppText variant="label" className="text-white/70 mb-1">
                   Verification Status
-                </Text>
-                <Text className="text-white text-2xl font-bold mt-1">
+                </AppText>
+                <AppText weight="bold" className="text-white text-2xl">
                   {connectedCount}/4 Linked
-                </Text>
+                </AppText>
               </View>
               <View className="bg-white/20 rounded-full px-4 py-2">
-                <Text className="text-white font-bold">+{totalBoost} pts</Text>
+                <AppText weight="bold" className="text-white">+{totalBoost} pts</AppText>
               </View>
             </View>
             
@@ -166,7 +167,7 @@ export default function KYCHubScreen() {
 
           {/* Why Link Section */}
           <View className="bg-white/5 border border-white/10 rounded-2xl p-5 mt-5">
-            <Text className="text-white font-bold text-lg mb-3">Why Link Accounts?</Text>
+            <AppText weight="bold" className="text-white text-lg mb-3">Why Link Accounts?</AppText>
             <View className="space-y-3">
               <BenefitItem 
                 icon="shield-checkmark" 
@@ -192,7 +193,7 @@ export default function KYCHubScreen() {
           </View>
 
           {/* Social Accounts */}
-          <Text className="text-white font-bold text-lg mt-6 mb-3">Link Your Accounts</Text>
+          <AppText weight="bold" className="text-white text-lg mt-6 mb-3">Link Your Accounts</AppText>
           
           {socials.map((social) => (
             <View
@@ -217,19 +218,19 @@ export default function KYCHubScreen() {
                   </View>
                   <View>
                     <View className="flex-row items-center">
-                      <Text className="text-white font-bold">{social.name}</Text>
+                      <AppText weight="bold" className="text-white">{social.name}</AppText>
                       {social.connected && (
                         <View className="ml-2 bg-green-500/20 px-2 py-0.5 rounded-full">
-                          <Text className="text-green-400 text-xs">✓ Linked</Text>
+                          <AppText weight="bold" className="text-green-400 text-xs">✓ Linked</AppText>
                         </View>
                       )}
                     </View>
                     {social.connected ? (
-                      <Text className="text-green-400 text-xs">{social.username}</Text>
+                      <AppText weight="bold" className="text-green-400 text-xs">{social.username}</AppText>
                     ) : (
-                      <Text className="text-white/40 text-xs">
+                      <AppText variant="caption" className="text-white/40">
                         +{social.scoreBoost} pts • {social.unlocks}
-                      </Text>
+                      </AppText>
                     )}
                   </View>
                 </View>
@@ -239,7 +240,7 @@ export default function KYCHubScreen() {
                     onPress={() => handleDisconnect(social)}
                     className="bg-white/10 px-4 py-2 rounded-xl"
                   >
-                    <Text className="text-white/60 font-bold text-sm">Remove</Text>
+                    <AppText weight="bold" className="text-white/60 text-sm">Remove</AppText>
                   </TouchableOpacity>
                 ) : (
                   <TouchableOpacity 
@@ -248,9 +249,9 @@ export default function KYCHubScreen() {
                     className="bg-indigo-500 px-4 py-2 rounded-xl"
                     style={{ opacity: isVerifying === social.id ? 0.5 : 1 }}
                   >
-                    <Text className="text-white font-bold text-sm">
+                    <AppText weight="bold" className="text-white text-sm">
                       {isVerifying === social.id ? "Linking..." : "Connect"}
-                    </Text>
+                    </AppText>
                   </TouchableOpacity>
                 )}
               </View>
@@ -260,17 +261,17 @@ export default function KYCHubScreen() {
           {/* ID Verification Section */}
           <View className="bg-gradient-to-br from-yellow-500/20 to-orange-500/20 border border-yellow-500/30 rounded-2xl p-5 mt-5 mb-8">
             <View className="flex-row items-center mb-3">
-              <Text className="text-3xl mr-3">🪪</Text>
+              <AppText className="text-3xl mr-3">🪪</AppText>
               <View>
-                <Text className="text-white font-bold text-lg">Full ID Verification</Text>
-                <Text className="text-white/50 text-xs">For institutional limits</Text>
+                <AppText weight="bold" className="text-white text-lg">Full ID Verification</AppText>
+                <AppText variant="caption" className="text-white/50">For institutional limits</AppText>
               </View>
             </View>
-            <Text className="text-white/70 text-sm leading-5 mb-4">
+            <AppText className="text-white/70 text-sm leading-5 mb-4">
               Complete full KYC verification to unlock unlimited trading and become a verified merchant on the platform.
-            </Text>
+            </AppText>
             <TouchableOpacity className="bg-yellow-500/20 border border-yellow-500/30 rounded-xl py-3 items-center">
-              <Text className="text-yellow-400 font-bold">Coming Soon</Text>
+              <AppText weight="bold" className="text-yellow-400">Coming Soon</AppText>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -288,7 +289,7 @@ function BenefitItem({ icon, text, color }: { icon: string; text: string; color:
       >
         <Ionicons name={icon as any} size={16} color={color} />
       </View>
-      <Text className="text-white/70 flex-1">{text}</Text>
+      <AppText className="text-white/70 flex-1">{text}</AppText>
     </View>
   );
 }

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
+import { AppText } from "@/components/ui/AppText";
 import { useRouter } from "expo-router";
 import { useAuthStore } from "@/store/auth";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -96,8 +97,8 @@ export default function FlashTrustScreen() {
             <Ionicons name="arrow-back" size={24} color="white" />
           </TouchableOpacity>
           <View className="flex-1">
-            <Text className="text-white text-xl font-bold">Flash Trust ⚡</Text>
-            <Text className="text-white/40 text-xs">Temporary tier boost with collateral</Text>
+            <AppText variant="h3" weight="bold" className="text-white">Flash Trust ⚡</AppText>
+            <AppText variant="caption" className="text-white/40">Temporary tier boost with collateral</AppText>
           </View>
         </View>
 
@@ -105,46 +106,46 @@ export default function FlashTrustScreen() {
           {/* Explanation Card */}
           <View className="bg-gradient-to-br from-purple-500/20 to-indigo-500/20 border border-purple-500/30 rounded-2xl p-5 mt-5">
             <View className="flex-row items-center mb-3">
-              <Text className="text-3xl mr-3">⚡</Text>
+              <AppText className="text-3xl mr-3">⚡</AppText>
               <View>
-                <Text className="text-white font-bold text-lg">What is Flash Trust?</Text>
-                <Text className="text-white/50 text-xs">Instant tier upgrade</Text>
+                <AppText weight="bold" className="text-white text-lg">What is Flash Trust?</AppText>
+                <AppText variant="caption" className="text-white/50">Instant tier upgrade</AppText>
               </View>
             </View>
-            <Text className="text-white/70 text-sm leading-5">
+            <AppText className="text-white/70 text-sm leading-5">
               Flash Trust lets you temporarily boost your trading tier by depositing USDC as collateral. 
               Perfect for one-time high-value trades when your score is still building.
-            </Text>
+            </AppText>
             <View className="mt-4 bg-white/5 rounded-xl p-3">
-              <Text className="text-yellow-400 text-xs font-bold">
+              <AppText weight="bold" className="text-yellow-400 text-xs">
                 ⏱️ Duration: 24 hours • Collateral returned after expiry
-              </Text>
+              </AppText>
             </View>
           </View>
 
           {/* Current Status */}
           <View className="bg-white/5 border border-white/10 rounded-2xl p-5 mt-5">
-            <Text className="text-white/40 text-xs font-bold uppercase tracking-wider mb-3">
+            <AppText variant="label" className="text-white/40 mb-3">
               Your Current Status
-            </Text>
+            </AppText>
             <View className="flex-row items-center justify-between">
               <View className="flex-row items-center">
-                <Text className="text-3xl mr-3">
+                <AppText className="text-3xl mr-3">
                   {TIERS[currentTierIndex]?.icon || "⏳"}
-                </Text>
+                </AppText>
                 <View>
-                  <Text className="text-white font-bold">{user?.fairTier || "UNVERIFIED"}</Text>
-                  <Text className="text-white/40 text-xs">FairScore: {user?.fairScore || 0}</Text>
+                  <AppText weight="bold" className="text-white">{user?.fairTier || "UNVERIFIED"}</AppText>
+                  <AppText variant="caption" className="text-white/40">FairScore: {user?.fairScore || 0}</AppText>
                 </View>
               </View>
               <View className="bg-white/10 px-3 py-1.5 rounded-full">
-                <Text className="text-white/60 text-xs">Current</Text>
+                <AppText className="text-white/60 text-xs">Current</AppText>
               </View>
             </View>
           </View>
 
           {/* Select Tier */}
-          <Text className="text-white font-bold text-lg mt-6 mb-3">Select Upgrade Tier</Text>
+          <AppText weight="bold" className="text-white text-lg mt-6 mb-3">Select Upgrade Tier</AppText>
           
           {TIERS.map((tier, index) => {
             const isCurrentOrLower = index <= currentTierIndex;
@@ -169,31 +170,31 @@ export default function FlashTrustScreen() {
                       className="w-12 h-12 rounded-full items-center justify-center mr-4"
                       style={{ backgroundColor: `${tier.color}20` }}
                     >
-                      <Text className="text-2xl">{tier.icon}</Text>
+                      <AppText className="text-2xl">{tier.icon}</AppText>
                     </View>
                     <View>
-                      <Text className="text-white font-bold">{tier.name}</Text>
-                      <Text className="text-white/40 text-xs">
+                      <AppText weight="bold" className="text-white">{tier.name}</AppText>
+                      <AppText variant="caption" className="text-white/40">
                         Max Trade: ${tier.maxTrade.toLocaleString()} • Fee: {tier.fee}
-                      </Text>
+                      </AppText>
                     </View>
                   </View>
                   <View className="items-end">
                     {isCurrentOrLower ? (
-                      <Text className="text-white/30 text-xs">Your tier or lower</Text>
+                      <AppText className="text-white/30 text-xs">Your tier or lower</AppText>
                     ) : (
                       <>
-                        <Text className="text-white font-bold">{tier.collateral} USDC</Text>
-                        <Text className="text-white/40 text-xs">Collateral</Text>
+                        <AppText weight="bold" className="text-white">{tier.collateral} USDC</AppText>
+                        <AppText variant="caption" className="text-white/40">Collateral</AppText>
                       </>
                     )}
                   </View>
                 </View>
                 {isSelected && (
                   <View className="mt-3 pt-3 border-t border-indigo-500/30">
-                    <Text className="text-indigo-400 text-center text-sm">
+                    <AppText weight="medium" className="text-indigo-400 text-center text-sm">
                       ✓ Selected for Flash Trust
-                    </Text>
+                    </AppText>
                   </View>
                 )}
               </TouchableOpacity>
@@ -214,15 +215,15 @@ export default function FlashTrustScreen() {
               end={{ x: 1, y: 0 }}
             >
               {isActivating ? (
-                <Text className="text-white font-bold text-lg">Activating...</Text>
+                <AppText weight="bold" className="text-white text-lg">Activating...</AppText>
               ) : selectedTier ? (
-                <Text className="text-white font-bold text-lg">
+                <AppText weight="bold" className="text-white text-lg">
                   Deposit {selectedTier.collateral} USDC & Activate ⚡
-                </Text>
+                </AppText>
               ) : (
-                <Text className="text-white font-bold text-lg">
+                <AppText weight="bold" className="text-white text-lg">
                   Select a Tier to Upgrade
-                </Text>
+                </AppText>
               )}
             </LinearGradient>
           </TouchableOpacity>
@@ -231,11 +232,11 @@ export default function FlashTrustScreen() {
           <View className="bg-yellow-500/10 border border-yellow-500/20 rounded-2xl p-4 mb-8">
             <View className="flex-row items-center mb-2">
               <Ionicons name="warning" size={18} color="#eab308" />
-              <Text className="text-yellow-500 font-bold ml-2">Important</Text>
+              <AppText weight="bold" className="text-yellow-500 ml-2">Important</AppText>
             </View>
-            <Text className="text-yellow-500/70 text-sm">
+            <AppText variant="caption" className="text-yellow-500/70">
               If you fail to complete trades properly during Flash Trust, your collateral may be partially slashed as penalty.
-            </Text>
+            </AppText>
           </View>
         </ScrollView>
       </SafeAreaView>

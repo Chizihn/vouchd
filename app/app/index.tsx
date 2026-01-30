@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link, Redirect } from "expo-router";
 import { useAuthStore } from "@/store/auth";
+import { AppText } from "@/components/ui/AppText";
 
 const { width } = Dimensions.get("window");
 
@@ -12,7 +13,7 @@ export default function Index() {
   if (isLoading) {
     return (
       <View className="flex-1 items-center justify-center" style={{ backgroundColor: '#07152B' }}>
-        <Text className="text-5xl font-bold text-white mb-4">Vouchd</Text>
+        <AppText weight="bold" className="text-5xl text-white mb-4">Vouchd</AppText>
         <View className="w-16 h-1 bg-white/30 rounded-full mb-8" />
         <View className="flex-row space-x-2">
           <View className="w-3 h-3 bg-blue-500 rounded-full animate-pulse" />
@@ -47,10 +48,10 @@ export default function Index() {
           <View className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl items-center justify-center mb-6 shadow-xl" style={{ shadowColor: '#6366f1', shadowRadius: 30, shadowOpacity: 0.5 }}>
             <Text className="text-4xl">🤝</Text>
           </View>
-          <Text className="text-5xl font-black text-white mb-2 tracking-tight">Vouchd</Text>
+          <AppText weight="extrabold" className="text-5xl text-white mb-2 tracking-tight">Vouchd</AppText>
           <View className="flex-row items-center">
             <View className="w-2 h-2 bg-green-500 rounded-full mr-2" />
-            <Text className="text-white/50 text-sm font-medium">Trust-Based P2P Exchange</Text>
+            <AppText variant="caption" weight="medium" className="text-white/50">Trust-Based P2P Exchange</AppText>
           </View>
         </View>
 
@@ -61,8 +62,8 @@ export default function Index() {
               <Text className="text-2xl">🛡️</Text>
             </View>
             <View className="flex-1">
-              <Text className="text-white font-bold text-base">FairScale Reputation</Text>
-              <Text className="text-white/40 text-sm">Trust scores powered by on-chain data</Text>
+              <AppText weight="bold" className="text-white text-base">FairScale Reputation</AppText>
+              <AppText variant="caption" className="text-white/40">Trust scores powered by on-chain data</AppText>
             </View>
           </View>
 
@@ -71,8 +72,8 @@ export default function Index() {
               <Text className="text-2xl">⚡</Text>
             </View>
             <View className="flex-1">
-              <Text className="text-white font-bold text-base">Smart Contract Escrow</Text>
-              <Text className="text-white/40 text-sm">Non-custodial & trustless trades</Text>
+              <AppText weight="bold" className="text-white text-base">Smart Contract Escrow</AppText>
+              <AppText variant="caption" className="text-white/40">Non-custodial & trustless trades</AppText>
             </View>
           </View>
 
@@ -81,8 +82,8 @@ export default function Index() {
               <Text className="text-2xl">💎</Text>
             </View>
             <View className="flex-1">
-              <Text className="text-white font-bold text-base">Tier-Based Rewards</Text>
-              <Text className="text-white/40 text-sm">Earn more as your reputation grows</Text>
+              <AppText weight="bold" className="text-white text-base">Tier-Based Rewards</AppText>
+              <AppText variant="caption" className="text-white/40">Earn more as your reputation grows</AppText>
             </View>
           </View>
         </View>
@@ -97,7 +98,7 @@ export default function Index() {
               className="rounded-2xl py-5 items-center shadow-xl"
               style={{ shadowColor: '#6366f1', shadowRadius: 20, shadowOpacity: 0.5 }}
             >
-              <Text className="text-white font-bold text-lg">Continue</Text>
+              <AppText weight="bold" className="text-white text-lg">Continue</AppText>
             </LinearGradient>
           </TouchableOpacity>
         </Link>
@@ -105,14 +106,14 @@ export default function Index() {
         {/* Secondary Link */}
         <Link href="/welcome" asChild>
           <TouchableOpacity className="py-3">
-            <Text className="text-white/40 text-sm">Learn more about Vouchd →</Text>
+            <AppText variant="caption" className="text-white/40">Learn more about Vouchd →</AppText>
           </TouchableOpacity>
         </Link>
       </View>
 
       {/* Footer */}
       <View className="pb-10 items-center">
-        <Text className="text-white/20 text-xs">Powered by Solana & FairScale</Text>
+        <AppText variant="caption" className="text-white/20">Powered by Solana & FairScale</AppText>
       </View>
     </LinearGradient>
   );

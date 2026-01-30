@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { AppText } from "@/components/ui/AppText";
 import { useRouter } from "expo-router";
 import { useAuthStore } from "@/store/auth";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -36,42 +37,42 @@ export default function BoostScoreScreen() {
             <Ionicons name="arrow-back" size={24} color="white" />
           </TouchableOpacity>
           <View className="flex-1">
-            <Text className="text-white text-xl font-bold">Boost Your Score</Text>
-            <Text className="text-white/40 text-xs">Improve reputation, unlock higher limits</Text>
+            <AppText variant="h3" weight="bold" className="text-white">Boost Your Score</AppText>
+            <AppText variant="caption" className="text-white/40">Improve reputation, unlock higher limits</AppText>
           </View>
         </View>
 
         <ScrollView className="flex-1 px-5" showsVerticalScrollIndicator={false}>
           {/* Current Score */}
           <View className="bg-white/5 border border-white/10 rounded-2xl p-6 mt-5 items-center">
-            <Text className="text-white/40 text-xs uppercase tracking-wider mb-2">Current FairScore</Text>
-            <Text className="text-5xl font-bold" style={{ color: tierColor }}>
+            <AppText variant="label" className="text-white/40 mb-2">Current FairScore</AppText>
+            <AppText weight="bold" className="text-5xl" style={{ color: tierColor }}>
               {user.fairScore || 0}
-            </Text>
+            </AppText>
             <View 
               className="px-4 py-1.5 rounded-full mt-3"
               style={{ backgroundColor: `${tierColor}20` }}
             >
-              <Text style={{ color: tierColor }} className="font-bold text-sm">
+              <AppText weight="bold" style={{ color: tierColor }} className="text-sm">
                 {user.fairTier || "UNVERIFIED"} TIER
-              </Text>
+              </AppText>
             </View>
           </View>
 
           {/* Score Breakdown */}
           <View className="flex-row gap-3 mt-4">
             <View className="flex-1 bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 items-center">
-              <Text className="text-blue-400 text-2xl font-bold">{user.walletScore || 0}</Text>
-              <Text className="text-white/40 text-xs">Wallet Score</Text>
+              <AppText weight="bold" className="text-blue-400 text-2xl">{user.walletScore || 0}</AppText>
+              <AppText variant="caption" className="text-white/40">Wallet Score</AppText>
             </View>
             <View className="flex-1 bg-purple-500/10 border border-purple-500/20 rounded-xl p-4 items-center">
-              <Text className="text-purple-400 text-2xl font-bold">{user.socialScore || 0}</Text>
-              <Text className="text-white/40 text-xs">Social Score</Text>
+              <AppText weight="bold" className="text-purple-400 text-2xl">{user.socialScore || 0}</AppText>
+              <AppText variant="caption" className="text-white/40">Social Score</AppText>
             </View>
           </View>
 
           {/* Quests Section */}
-          <Text className="text-white font-bold text-lg mt-6 mb-4">Quests to Boost Score</Text>
+          <AppText weight="bold" className="text-white text-lg mt-6 mb-4">Quests to Boost Score</AppText>
 
           <QuestItem
             icon="🏦"
@@ -123,8 +124,8 @@ export default function BoostScoreScreen() {
             >
               <View className="flex-row items-center justify-between">
                 <View>
-                  <Text className="text-white font-bold text-lg">Flash Trust ⚡</Text>
-                  <Text className="text-white/70 text-sm">Instant tier boost with collateral</Text>
+                  <AppText weight="bold" className="text-white text-lg">Flash Trust ⚡</AppText>
+                  <AppText variant="caption" className="text-white/70">Instant tier boost with collateral</AppText>
                 </View>
                 <Ionicons name="chevron-forward" size={24} color="white" />
               </View>
@@ -134,12 +135,12 @@ export default function BoostScoreScreen() {
           {/* Pro Tip */}
           <View className="bg-indigo-500/10 border border-indigo-500/20 rounded-2xl p-5 mt-4 mb-8">
             <View className="flex-row items-center mb-2">
-              <Text className="text-xl mr-2">💡</Text>
-              <Text className="text-indigo-400 font-bold">Pro Tip</Text>
+              <AppText className="text-xl mr-2">💡</AppText>
+              <AppText weight="bold" className="text-indigo-400">Pro Tip</AppText>
             </View>
-            <Text className="text-indigo-300/70 text-sm leading-5">
+            <AppText className="text-indigo-300/70 text-sm leading-5">
               High-volume traders with consistent performance get prioritized in our matching algorithm and earn reputation dividends.
-            </Text>
+            </AppText>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -175,21 +176,21 @@ function QuestItem({
       <View className={`w-12 h-12 rounded-full items-center justify-center mr-4 ${
         completed ? "bg-green-500/20" : "bg-white/10"
       }`}>
-        <Text className="text-2xl">{icon}</Text>
+        <AppText className="text-2xl">{icon}</AppText>
       </View>
       <View className="flex-1">
-        <Text className={completed ? "text-green-400 font-bold" : "text-white font-bold"}>
+        <AppText weight="bold" className={completed ? "text-green-400" : "text-white"}>
           {title}
-        </Text>
-        <Text className="text-white/40 text-xs">{description}</Text>
+        </AppText>
+        <AppText variant="caption" className="text-white/40">{description}</AppText>
       </View>
       <View className="items-end">
         {completed ? (
           <View className="bg-green-500/20 px-3 py-1 rounded-full">
-            <Text className="text-green-400 font-bold text-sm">✓ Done</Text>
+            <AppText weight="bold" className="text-green-400 text-sm">✓ Done</AppText>
           </View>
         ) : (
-          <Text className="text-indigo-400 font-bold text-sm">{points}</Text>
+          <AppText weight="bold" className="text-indigo-400 text-sm">{points}</AppText>
         )}
       </View>
     </TouchableOpacity>

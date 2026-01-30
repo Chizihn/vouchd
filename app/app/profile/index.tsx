@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Alert, Switch } from "react-native";
+import { AppText } from "@/components/ui/AppText";
 import { useRouter } from "expo-router";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_ME_QUERY } from "@/graphql/queries";
@@ -64,8 +65,8 @@ export default function ProfileScreen() {
         {/* Bounty Impact Mode Toggle */}
         <View className="flex-row items-center justify-between w-full mb-8 bg-blue-500/10 p-3 rounded-2xl border border-blue-500/20">
            <View>
-              <Text className="text-blue-400 text-[10px] font-bold uppercase tracking-widest">Bounty Impact Mode</Text>
-              <Text className="text-white/40 text-[8px]">Simulation: Newbie vs Whale</Text>
+              <AppText variant="label" weight="extrabold" className="text-blue-400 mb-1">Bounty Impact Mode</AppText>
+              <AppText weight="bold" className="text-white/40 text-[8px]">Simulation: Newbie vs Whale</AppText>
            </View>
            <Switch 
             value={impactMode} 
@@ -77,15 +78,15 @@ export default function ProfileScreen() {
         {/* User Info */}
         <View className="items-center mb-6">
           <View className="w-24 h-24 rounded-full bg-primary/20 border-2 border-primary/50 items-center justify-center mb-4 overflow-hidden">
-             <Text className="text-4xl">👤</Text>
+             <AppText className="text-4xl">👤</AppText>
           </View>
-          <Text className="text-3xl font-bold text-white mb-1">
+          <AppText weight="bold" className="text-3xl text-white mb-1">
              {user.username || user.walletAddress.slice(0, 8)}
-          </Text>
+          </AppText>
           <View className="bg-white/10 px-3 py-1 rounded-full border border-white/10 mb-4">
-            <Text className="text-white/60 text-xs font-mono">
+            <AppText weight="bold" className="text-white/60 text-xs font-mono">
               {user.walletAddress.slice(0, 6)}...{user.walletAddress.slice(-4)}
-            </Text>
+            </AppText>
           </View>
 
           {/* Universal Trust Seal - Wow Feature */}
@@ -93,8 +94,8 @@ export default function ProfileScreen() {
             className="bg-white/5 border border-white/10 px-4 py-2 rounded-xl flex-row items-center"
             onPress={() => Alert.alert("Trust Seal Active", `Public profile link created: vouchd.xyz/trust/${user.walletAddress.slice(0, 8)}`)}
           >
-             <Text className="mr-2">📜</Text>
-             <Text className="text-white/60 text-[10px] font-bold uppercase tracking-widest">Generate Public Trust Seal</Text>
+             <AppText className="mr-2">📜</AppText>
+             <AppText variant="label" weight="extrabold" className="text-white/60">Generate Public Trust Seal</AppText>
           </TouchableOpacity>
         </View>
 
@@ -115,7 +116,7 @@ export default function ProfileScreen() {
                 <Text className="text-6xl font-black text-white">{user.fairScore || 0}</Text>
                 <Text className="text-white/50 text-sm">/ 1000</Text>
                 <View className="mt-2 bg-white/10 px-3 py-1 rounded-full border border-white/10">
-                   <Text className="text-[10px] font-bold" style={{ color: tierColor }}>{user.fairTier} TIER</Text>
+                   <AppText weight="bold" className="text-[10px]" style={{ color: tierColor }}>{user.fairTier} TIER</AppText>
                 </View>
               </View>
            </View>
@@ -133,9 +134,9 @@ export default function ProfileScreen() {
 
       <View className="px-6 pb-20">
         {/* Airdrop & DeFi Capability - Wow Feature */}
-        <Text className="text-xl font-bold text-white mt-8 mb-4">Ecosystem Eligibility</Text>
+        <AppText weight="bold" className="text-xl text-white mt-8 mb-4">Ecosystem Eligibility</AppText>
         <View className="glass rounded-2xl p-6 border border-primary/20 bg-primary/5">
-           <Text className="text-primary text-[10px] font-bold uppercase tracking-widest mb-3">Powered by FairScale Insights</Text>
+           <AppText variant="label" weight="extrabold" className="text-primary mb-3">Powered by FairScale Insights</AppText>
            <View className="space-y-3">
               {(user.airdropPredictions && user.airdropPredictions.length > 0) ? user.airdropPredictions.map((prediction: string, i: number) => (
                 <View key={i} className="flex-row items-center">
@@ -149,7 +150,7 @@ export default function ProfileScreen() {
         </View>
 
         {/* Score Pillars */}
-        <Text className="text-xl font-bold text-white mt-8 mb-4">Score Pillars</Text>
+        <AppText weight="bold" className="text-xl text-white mt-8 mb-4">Score Pillars</AppText>
         <View className="flex-row flex-wrap justify-between">
            <PillarBox label="Economy" status={user.pillars?.economy?.label || "Low"} color="pillarLow" width="w-[31%]" />
            <PillarBox label="Risk" status={user.pillars?.risk?.label || "Medium"} color="pillarMedium" width="w-[31%]" />
@@ -159,7 +160,7 @@ export default function ProfileScreen() {
         </View>
 
         {/* Activity Center - Wow Feature */}
-        <Text className="text-xl font-bold text-white mt-8 mb-4">Trust Timeline</Text>
+        <AppText weight="bold" className="text-xl text-white mt-8 mb-4">Trust Timeline</AppText>
         <View className="glass rounded-2xl p-6">
            <TimelineItem icon="📈" title="FairScore Increase" sub="+42 points for fast escrow release" time="2h ago" />
            <TimelineItem icon="🛡️" title="KYC Verified" sub="Identity verified via Twitter" time="1d ago" />
@@ -167,7 +168,7 @@ export default function ProfileScreen() {
         </View>
 
         {/* Reputation Dividends - Wow Feature */}
-        <Text className="text-xl font-bold text-white mt-8 mb-4">Reputation Dividends</Text>
+        <AppText weight="bold" className="text-xl text-white mt-8 mb-4">Reputation Dividends</AppText>
         <View className="glass rounded-2xl p-6 bg-yellow-500/5 border border-yellow-500/20">
            <View className="flex-row justify-between items-center">
               <View>
@@ -183,15 +184,15 @@ export default function ProfileScreen() {
         </View>
 
         {/* Flash Trust - Wow Feature */}
-        <Text className="text-xl font-bold text-white mt-8 mb-4">Flash Trust</Text>
+        <AppText weight="bold" className="text-xl text-white mt-8 mb-4">Flash Trust</AppText>
         <TouchableOpacity 
           className="glass rounded-2xl p-6 border border-blue-500/20 bg-blue-500/5 flex-row items-center justify-between"
           onPress={() => Alert.alert("Flash Trust", "Lock 5 SOL as collateral to temporarily boost your reputation tier for 7 days.")}
         >
            <View className="flex-1">
-              <Text className="text-blue-400 text-[10px] font-bold uppercase tracking-widest mb-1">Temporary Rep Boost</Text>
-              <Text className="text-white font-bold text-base">Boost to Diamond Tier</Text>
-              <Text className="text-white/40 text-[10px] mt-1">Rent a higher tier by providing economic skin in the game.</Text>
+              <AppText variant="label" weight="extrabold" className="text-blue-400 mb-1">Temporary Rep Boost</AppText>
+              <AppText weight="bold" className="text-white text-base">Boost to Diamond Tier</AppText>
+              <AppText variant="caption" className="text-white/40 mt-1">Rent a higher tier by providing economic skin in the game.</AppText>
            </View>
            <View className="bg-blue-500 w-10 h-10 rounded-full items-center justify-center">
               <Text className="text-white">🚀</Text>
@@ -199,7 +200,7 @@ export default function ProfileScreen() {
         </TouchableOpacity>
 
         {/* Recommended Actions */}
-        <Text className="text-xl font-bold text-white mt-8 mb-4">Recommended Actions</Text>
+        <AppText weight="bold" className="text-xl text-white mt-8 mb-4">Recommended Actions</AppText>
         <View className="space-y-3">
            <ActionItem 
             title="Connect Your Socials" 
@@ -222,7 +223,7 @@ export default function ProfileScreen() {
         </View>
 
         {/* Unlocked Perks */}
-        <Text className="text-xl font-bold text-white mt-8 mb-4">Your Unlocked Perks</Text>
+        <AppText weight="bold" className="text-xl text-white mt-8 mb-4">Your Unlocked Perks</AppText>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row space-x-4">
            <PerkCard title="KAST" sub="Access benefits" icon="💳" />
            <PerkCard title="SurfCash" sub="Zero fees" icon="🌊" />
@@ -253,8 +254,8 @@ export default function ProfileScreen() {
       {kycModalVisible && (
         <View className="absolute inset-0 z-50 bg-black/95 items-center justify-center px-6">
            <View className="glass rounded-3xl p-8 w-full max-w-sm border border-white/10">
-              <Text className="text-2xl font-bold text-white mb-2">Identity Hub</Text>
-              <Text className="text-white/40 text-sm mb-8">Link your identity to boost your FairScore by up to +150 points.</Text>
+              <AppText variant="h3" weight="bold" className="text-white mb-2">Identity Hub</AppText>
+              <AppText variant="caption" className="text-white/40 mb-8">Link your identity to boost your FairScore by up to +150 points.</AppText>
               
               <View className="space-y-4 mb-10">
                  <KYCOption icon="𝕏" label="Link X (Twitter)" status="CONNECTED" />
@@ -304,8 +305,8 @@ function PillarBox({ label, status, color, width }: { label: string, status: str
 
   return (
     <View className={`${width} glass rounded-2xl p-4 h-24 justify-between`}>
-      <Text className="text-white/60 text-[10px] font-bold uppercase tracking-widest">{label}</Text>
-      <Text className={`text-base font-bold ${getStatusColorClass(status)}`}>{status}</Text>
+      <AppText variant="label" className="text-white/60">{label}</AppText>
+      <AppText weight="bold" className={`text-base ${getStatusColorClass(status)}`}>{status}</AppText>
     </View>
   );
 }
@@ -333,14 +334,14 @@ function ActionItem({ title, sub, priority, onPress }: any) {
     <TouchableOpacity onPress={onPress} className="glass rounded-2xl p-5 flex-row items-center justify-between">
       <View className="flex-1">
         <View className="flex-row items-center mb-1">
-          <Text className="text-white font-bold mr-2 text-sm">{title}</Text>
+          <AppText weight="bold" className="text-white mr-2 text-sm">{title}</AppText>
           <View className={`${priorityColor.split(' ')[0]} px-2 py-0.5 rounded-md`}>
-            <Text className={`text-[8px] font-bold ${priorityColor.split(' ')[1]}`}>{priority}</Text>
+            <AppText variant="label" weight="bold" className={priorityColor.split(' ')[1]}>{priority}</AppText>
           </View>
         </View>
-        <Text className="text-white/40 text-[10px]">{sub}</Text>
+        <AppText variant="caption" className="text-white/40">{sub}</AppText>
       </View>
-      <Text className="text-white/20 text-xl">›</Text>
+      <AppText className="text-white/20 text-xl">›</AppText>
     </TouchableOpacity>
   );
 }
@@ -349,10 +350,10 @@ function PerkCard({ title, sub, icon }: any) {
   return (
     <View className="glass rounded-2xl p-5 w-40 mr-4">
       <View className="w-10 h-10 rounded-xl bg-white/5 items-center justify-center mb-8">
-        <Text className="text-xl">{icon}</Text>
+        <AppText className="text-xl">{icon}</AppText>
       </View>
-      <Text className="text-white/40 text-[10px] font-bold uppercase">{sub}</Text>
-      <Text className="text-white font-bold text-lg">{title}</Text>
+      <AppText variant="label" className="text-white/40">{sub}</AppText>
+      <AppText weight="bold" className="text-white text-lg">{title}</AppText>
     </View>
   );
 }
@@ -362,11 +363,11 @@ function KYCOption({ icon, label, status }: any) {
     <View className="flex-row justify-between items-center py-3 border-b border-white/5">
        <View className="flex-row items-center">
           <View className="w-8 h-8 rounded-lg bg-white/5 items-center justify-center mr-3">
-             <Text className="text-white font-bold text-sm">{icon}</Text>
+             <AppText weight="bold" className="text-white text-sm">{icon}</AppText>
           </View>
-          <Text className="text-white font-medium text-sm">{label}</Text>
+          <AppText weight="medium" className="text-white text-sm">{label}</AppText>
        </View>
-       <Text className={`text-[10px] font-bold ${status === 'CONNECTED' ? 'text-green-500' : 'text-primary'}`}>{status}</Text>
+       <AppText variant="label" weight="bold" className={status === 'CONNECTED' ? 'text-green-500' : 'text-primary'}>{status}</AppText>
     </View>
   );
 }

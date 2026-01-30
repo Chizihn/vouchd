@@ -45,6 +45,7 @@ export default function TabsLayout() {
         tabBarLabelStyle: {
           fontSize: 11,
           fontWeight: "600",
+          fontFamily: "Outfit_600SemiBold",
         },
       }}
     >

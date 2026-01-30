@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, Dimensions, Animated } from "
 import { LinearGradient } from "expo-linear-gradient";
 import { Link, Redirect, useRouter } from "expo-router";
 import { useAuthStore } from "@/store/auth";
+import { AppText } from "@/components/ui/AppText";
 
 const { width } = Dimensions.get("window");
 
@@ -56,14 +57,13 @@ export default function WelcomeScreen() {
       <View className="absolute top-32 -left-10 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl" />
       <View className="absolute top-[40%] right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl" />
       
-      {/* Header */}
       <View className="pt-16 px-6 flex-row justify-between items-center">
-        <Text className="text-2xl font-black text-white">Vouchd</Text>
+        <AppText weight="extrabold" className="text-2xl text-white">Vouchd</AppText>
         <TouchableOpacity 
           onPress={() => handleFinishOnboarding("/")}
           className="bg-white/10 border border-white/20 px-4 py-2 rounded-full"
         >
-          <Text className="text-white text-sm font-semibold">Skip</Text>
+          <AppText variant="caption" weight="semibold" className="text-white">Skip</AppText>
         </TouchableOpacity>
       </View>
 
@@ -90,16 +90,16 @@ export default function WelcomeScreen() {
                 shadowOpacity: 0.3,
               }}
             >
-              <Text className="text-7xl">{page.icon}</Text>
+              <AppText className="text-7xl">{page.icon}</AppText>
             </View>
 
             {/* Content */}
-            <Text className="text-3xl font-bold text-white text-center mb-4">
+            <AppText weight="bold" className="text-3xl text-white text-center mb-4">
               {page.title}
-            </Text>
-            <Text className="text-white/50 text-center text-lg leading-7 px-4">
+            </AppText>
+            <AppText className="text-white/50 text-center text-lg leading-7 px-4">
               {page.subtitle}
-            </Text>
+            </AppText>
           </View>
         ))}
       </ScrollView>
@@ -131,14 +131,14 @@ export default function WelcomeScreen() {
             className="rounded-2xl py-5 items-center"
             style={{ shadowColor: '#6366f1', shadowRadius: 20, shadowOpacity: 0.5 }}
           >
-            <Text className="text-white font-bold text-lg">Get Started</Text>
+            <AppText weight="bold" className="text-white text-lg">Get Started</AppText>
           </LinearGradient>
         </TouchableOpacity>
 
         <View className="flex-row justify-center items-center">
-          <Text className="text-white/30 text-sm">Already have a wallet? </Text>
+          <AppText variant="caption" className="text-white/30">Already have a wallet? </AppText>
           <TouchableOpacity onPress={() => handleFinishOnboarding()}>
-            <Text className="text-blue-400 text-sm font-semibold">Connect Now</Text>
+            <AppText variant="caption" weight="semibold" className="text-blue-400">Connect Now</AppText>
           </TouchableOpacity>
         </View>
       </View>

@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
+import { AppText } from "./ui/AppText";
 import { TierBadge } from "./TierBadge";
 import {
   formatCurrency,
@@ -47,7 +48,7 @@ export function OfferCard({ offer, onPress }: OfferCardProps) {
       {/* Highly Trusted Indicator */}
       {isHighlyTrusted && (
         <View className="flex-row items-center mb-2 bg-green-500/10 self-start px-2 py-0.5 rounded-md">
-          <Text className="text-pillarHigh text-[8px] font-black uppercase">Highly Trusted Seller</Text>
+          <AppText weight="extrabold" className="text-pillarHigh text-[8px] uppercase">Highly Trusted Seller</AppText>
         </View>
       )}
 
@@ -58,13 +59,13 @@ export function OfferCard({ offer, onPress }: OfferCardProps) {
             <Text className="text-lg">👤</Text>
           </View>
           <View className="ml-3">
-            <Text className="font-bold text-white text-base">
+            <AppText weight="bold" className="text-white text-base">
               {offer.seller.username || (offer.seller.fairScore ? `Trader #${offer.seller.fairScore}` : "New Trader")}
-            </Text>
+            </AppText>
             <View className="flex-row items-center">
-              <Text className="text-white/40 text-[10px] font-bold uppercase">
+              <AppText variant="caption" weight="bold" className="text-white/40 uppercase">
                 {offer.seller.completedTrades} TRADES • {completionRate}% RATE
-              </Text>
+              </AppText>
             </View>
           </View>
         </View>
@@ -79,24 +80,24 @@ export function OfferCard({ offer, onPress }: OfferCardProps) {
       {/* Offer Details */}
       <View className="bg-white/5 rounded-xl p-4">
         <View className="flex-row justify-between items-center mb-1">
-          <Text className="text-2xl font-black text-white">
+          <AppText variant="h3" weight="extrabold" className="text-white">
             {formatCurrency(offer.fiatAmount, offer.fiatCurrency)}
-          </Text>
-          <Text className="text-white/60 font-mono text-xs">
+          </AppText>
+          <AppText className="text-white/60 font-mono text-xs">
             {formatCrypto(offer.cryptoAmount, offer.cryptoAsset)}
-          </Text>
+          </AppText>
         </View>
 
         <View className="flex-row justify-between items-center mt-2 pt-2 border-t border-white/5">
           <View className="bg-blue-500/10 px-2 py-1 rounded-md border border-blue-500/20">
-            <Text className="text-blue-400 text-[10px] font-bold uppercase">
+            <AppText variant="caption" weight="bold" className="text-blue-400 uppercase">
               {offer.paymentMethod.replace(/_/g, " ")}
-            </Text>
+            </AppText>
           </View>
-          <Text className="text-white/30 text-[10px] font-bold">
+          <AppText variant="caption" weight="bold" className="text-white/30 uppercase">
             LIMIT: {formatCurrency(offer.minLimit, offer.fiatCurrency)} —{" "}
             {formatCurrency(offer.maxLimit, offer.fiatCurrency)}
-          </Text>
+          </AppText>
         </View>
       </View>
     </TouchableOpacity>

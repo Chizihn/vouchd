@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
+import { AppText } from "./ui/AppText";
 
 interface Pillar {
   score: number;
@@ -43,8 +44,8 @@ function PillarRow({ label, pillar }: { label: string; pillar: Pillar }) {
   return (
     <View className="mb-3">
       <View className="flex-row justify-between items-center mb-1">
-        <Text className="text-white/60 text-[10px] font-bold uppercase tracking-wider">{label}</Text>
-        <Text className="text-[10px] font-bold" style={{ color }}>{pillar.label}</Text>
+        <AppText variant="caption" weight="bold" className="text-white/60 uppercase tracking-wider">{label}</AppText>
+        <AppText variant="caption" weight="bold" style={{ color }}>{pillar.label}</AppText>
       </View>
       <View className="h-1.5 bg-white/5 rounded-full overflow-hidden">
         <View 

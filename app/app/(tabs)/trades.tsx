@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   RefreshControl,
 } from "react-native";
+import { AppText } from "@/components/ui/AppText";
 import { useRouter } from "expo-router";
 import { useQuery } from "@apollo/client";
 import { GET_MY_TRADES_QUERY } from "@/graphql/queries";
@@ -57,8 +58,8 @@ export default function TradesScreen() {
       <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
         {/* Header */}
         <View className="px-5 pt-4 pb-2">
-          <Text className="text-2xl font-bold text-white mb-1">My Trades</Text>
-          <Text className="text-white/40 text-sm mb-4">Track your active and past trades</Text>
+          <AppText variant="h3" weight="bold" className="text-white mb-1">My Trades</AppText>
+          <AppText variant="caption" className="text-white/40 mb-4">Track your active and past trades</AppText>
 
           {/* Filter Pills */}
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -72,11 +73,11 @@ export default function TradesScreen() {
                 }`}
                 onPress={() => setActiveFilter(filter.key)}
               >
-                <Text className={`text-xs font-bold ${
+                <AppText weight="bold" className={`text-xs ${
                   activeFilter === filter.key ? "text-white" : "text-white/50"
-                }`}>
+                 }`}>
                   {filter.label}
-                </Text>
+                </AppText>
               </TouchableOpacity>
             ))}
           </ScrollView>
@@ -99,17 +100,17 @@ export default function TradesScreen() {
               <SkeletonList count={4} />
             ) : trades.length === 0 ? (
               <View className="items-center justify-center py-20 bg-white/5 rounded-2xl border border-white/10">
-                <Text className="text-4xl mb-4">📊</Text>
-                <Text className="text-white font-bold text-lg mb-2">No Trades Yet</Text>
-                <Text className="text-white/40 text-sm text-center px-8 mb-6">
+                <AppText className="text-4xl mb-4">📊</AppText>
+                <AppText weight="bold" className="text-white text-lg mb-2">No Trades Yet</AppText>
+                <AppText variant="caption" className="text-white/40 text-center px-8 mb-6">
                   Start trading by browsing offers in the marketplace
-                </Text>
+                </AppText>
                 <TouchableOpacity onPress={() => router.push("/(tabs)" as any)}>
                   <LinearGradient
                     colors={["#6366f1", "#8b5cf6"]}
                     className="px-6 py-3 rounded-xl"
                   >
-                    <Text className="text-white font-bold">Browse Offers</Text>
+                    <AppText weight="bold" className="text-white">Browse Offers</AppText>
                   </LinearGradient>
                 </TouchableOpacity>
               </View>
@@ -144,35 +145,35 @@ function TradeCard({ trade, onPress }: { trade: any; onPress: () => void }) {
       <View className="flex-row items-center justify-between mb-3">
         <View className="flex-row items-center">
           <View className="w-10 h-10 bg-white/10 rounded-full items-center justify-center mr-3">
-            <Text className="text-lg">{trade.offer?.cryptoAsset === "SOL" ? "◎" : "💵"}</Text>
+             <AppText className="text-lg">{trade.offer?.cryptoAsset === "SOL" ? "◎" : "💵"}</AppText>
           </View>
           <View>
-            <Text className="text-white font-bold">
+            <AppText weight="bold" className="text-white">
               {trade.cryptoAmount} {trade.offer?.cryptoAsset || "USDC"}
-            </Text>
-            <Text className="text-white/40 text-xs">
+            </AppText>
+            <AppText variant="caption" className="text-white/40">
               ${trade.fiatAmount?.toLocaleString()} {trade.offer?.fiatCurrency || "USD"}
-            </Text>
+            </AppText>
           </View>
         </View>
         <View 
           className="px-3 py-1.5 rounded-full flex-row items-center"
           style={{ backgroundColor: config.bg }}
         >
-          <Text className="mr-1">{config.icon}</Text>
-          <Text style={{ color: config.color }} className="text-xs font-bold">
+          <AppText className="mr-1">{config.icon}</AppText>
+          <AppText weight="bold" style={{ color: config.color }} className="text-xs">
             {trade.status}
-          </Text>
+          </AppText>
         </View>
       </View>
 
       <View className="flex-row items-center justify-between">
         <View className="flex-row items-center">
           <Ionicons name="person-outline" size={12} color="rgba(255,255,255,0.4)" />
-          <Text className="text-white/40 text-xs ml-1">
+          <AppText variant="caption" className="text-white/40 ml-1">
             {isBuyer ? "Buying from " : "Selling to "} 
             {(isBuyer ? trade.seller?.username : trade.buyer?.username) || "Trader"}
-          </Text>
+          </AppText>
         </View>
         <Ionicons name="chevron-forward" size={16} color="rgba(255,255,255,0.3)" />
       </View>

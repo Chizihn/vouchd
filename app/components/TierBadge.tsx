@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
+import { AppText } from "./ui/AppText";
 import { getTierColor, getTierBgColor } from "@/utils/helpers";
 
 interface TierBadgeProps {
@@ -38,11 +39,11 @@ export function TierBadge({
           className="w-2 h-2 rounded-full mr-1.5"
           style={{ backgroundColor: tierColor }}
         />
-        <Text className="font-semibold" style={{ color: tierColor }}>
+        <AppText weight="semibold" style={{ color: tierColor }}>
           {tier || "UNVERIFIED"}
-        </Text>
+        </AppText>
         {showScore && score !== null && (
-          <Text className="ml-1 text-gray-600 text-xs">({score})</Text>
+          <AppText variant="caption" className="ml-1 text-gray-600">({score})</AppText>
         )}
       </View>
       {showStars && starRating !== undefined && starRating !== null && (

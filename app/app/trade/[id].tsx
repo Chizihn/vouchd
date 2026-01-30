@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Linking } from "react-native";
+import { AppText } from "@/components/ui/AppText";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { useQuery, useMutation } from "@apollo/client/react";
 import { GET_TRADE_QUERY } from "@/graphql/queries";
@@ -70,7 +71,7 @@ export default function TradeEscrowScreen() {
   if (loading) {
     return (
       <View className="flex-1 items-center justify-center" style={{ backgroundColor: '#07152B' }}>
-        <Text className="text-white/50">Loading trade...</Text>
+        <AppText className="text-white/50">Loading trade...</AppText>
       </View>
     );
   }
@@ -170,9 +171,9 @@ export default function TradeEscrowScreen() {
         <View className="absolute inset-0 z-50 bg-black/80 items-center justify-center px-6">
           <View className="glass rounded-3xl p-6 w-full max-w-sm">
             <View className="flex-row justify-between items-center mb-6">
-              <Text className="text-xl font-bold text-white">Trust Intelligence</Text>
+              <AppText variant="h3" weight="bold" className="text-white">Trust Intelligence</AppText>
               <TouchableOpacity onPress={() => setShowRepAnalysis(false)}>
-                <Text className="text-white/40 text-xl">✕</Text>
+                <AppText className="text-white/40 text-xl">✕</AppText>
               </TouchableOpacity>
             </View>
 
@@ -181,17 +182,17 @@ export default function TradeEscrowScreen() {
             </View>
 
             <View className="mt-8 bg-blue-500/10 p-4 rounded-xl border border-blue-500/20">
-               <Text className="text-blue-400 text-[10px] font-bold mb-1 uppercase tracking-widest">💡 Safety Insight</Text>
-               <Text className="text-white/80 text-[11px] leading-relaxed">
+               <AppText variant="label" weight="extrabold" className="text-blue-400 mb-1">💡 Safety Insight</AppText>
+               <AppText className="text-white/80 text-[11px] leading-relaxed">
                  {counterparty.safetyInsight || "🛡️ Standard reputation profile. Follow normal P2P safety procedures."}
-               </Text>
+               </AppText>
             </View>
 
             <TouchableOpacity 
               className="mt-6 bg-blue-600 rounded-2xl py-4 items-center"
               onPress={() => setShowRepAnalysis(false)}
             >
-              <Text className="text-white font-bold">Back to Trade</Text>
+              <AppText weight="bold" className="text-white">Back to Trade</AppText>
             </TouchableOpacity>
           </View>
         </View>
@@ -200,12 +201,12 @@ export default function TradeEscrowScreen() {
       {/* Header */}
       <View className="pt-12 pb-4 px-6 border-b border-white/5" style={{ backgroundColor: '#07152B' }}>
         <TouchableOpacity onPress={() => router.back()} className="mb-3">
-          <Text className="text-2xl text-white">←</Text>
+          <AppText className="text-2xl text-white">←</AppText>
         </TouchableOpacity>
         <View className="flex-row items-center justify-between">
-          <Text className="text-lg font-semibold text-white">
+          <AppText weight="semibold" className="text-lg text-white">
             Trade #{trade.id.slice(0, 8)}
-          </Text>
+          </AppText>
         </View>
       </View>
 
@@ -222,8 +223,9 @@ export default function TradeEscrowScreen() {
         }`}
       >
         <View className="flex-row items-center justify-between">
-          <Text
-            className={`font-bold uppercase tracking-widest text-[10px] ${
+          <AppText
+            weight="bold"
+            className={`uppercase tracking-widest text-[10px] ${
               trade.status === "PENDING"
                 ? "text-yellow-500"
                 : trade.status === "ESCROWED"
@@ -240,10 +242,10 @@ export default function TradeEscrowScreen() {
                 : trade.status === "FIAT_SENT"
                   ? "💸 Payment Sent to Seller"
                   : "✓ Trade Successfully Completed"}
-          </Text>
-          <Text className="text-[10px] font-bold text-white/40">
+          </AppText>
+          <AppText weight="bold" className="text-[10px] text-white/40">
             ⏱️ {timeRemaining || "..."}
-          </Text>
+          </AppText>
         </View>
       </View>
 
@@ -252,20 +254,20 @@ export default function TradeEscrowScreen() {
         <View className="glass rounded-2xl p-6 mb-4 relative overflow-hidden">
           {counterparty.pillars?.risk?.label === "Low" && (
             <View className="absolute top-0 left-0 right-0 bg-red-500/20 py-1 items-center">
-              <Text className="text-red-500 text-[10px] font-bold uppercase tracking-widest">High Risk Counterparty</Text>
+              <AppText variant="label" weight="bold" className="text-red-500">High Risk Counterparty</AppText>
             </View>
           )}
           
-          <Text className="text-sm text-white/40 mb-4 pt-2">Trading with</Text>
+          <AppText variant="caption" className="text-white/40 mb-4 pt-2">Trading with</AppText>
 
           <View className="flex-row items-center mb-4">
             <View className="w-16 h-16 bg-blue-500/20 rounded-full mr-4 items-center justify-center border border-blue-500/30">
-              <Text className="text-white text-2xl">👤</Text>
+              <AppText className="text-white text-2xl">👤</AppText>
             </View>
             <View className="flex-1">
-              <Text className="text-lg font-bold text-white">
+              <AppText weight="bold" className="text-lg text-white">
                 {counterparty.username || "Anonymous"}
-              </Text>
+              </AppText>
               <View className="flex-row items-center mt-1">
                 <TierBadge
                   tier={counterparty.fairTier}
@@ -279,68 +281,68 @@ export default function TradeEscrowScreen() {
               className="bg-white/10 px-3 py-1.5 rounded-lg border border-white/10"
               onPress={() => setShowRepAnalysis(true)}
             >
-              <Text className="text-blue-400 text-[10px] font-bold uppercase">Reputation Analysis</Text>
+              <AppText variant="label" weight="extrabold" className="text-blue-400">Reputation Analysis</AppText>
             </TouchableOpacity>
           </View>
 
           <View className="flex-row items-center justify-around pt-4 border-t border-white/5">
             <View className="items-center">
-              <Text className="text-xl font-bold text-white">
+              <AppText weight="bold" className="text-xl text-white">
                 {Math.round(
                   (counterparty.completedTrades / counterparty.totalTrades) *
                     100,
                 ) || 0}
                 %
-              </Text>
-              <Text className="text-[10px] text-white/40 uppercase font-bold">Completion</Text>
+              </AppText>
+              <AppText variant="label" weight="bold" className="text-white/40">Completion</AppText>
             </View>
             <View className="items-center">
-              <Text className="text-xl font-bold text-white">
+              <AppText weight="bold" className="text-xl text-white">
                 {counterparty.totalTrades}
-              </Text>
-              <Text className="text-[10px] text-white/40 uppercase font-bold">Trades</Text>
+              </AppText>
+              <AppText variant="label" weight="bold" className="text-white/40">Trades</AppText>
             </View>
             <View className="items-center">
-              <Text className="text-xl font-bold text-white">
+              <AppText weight="bold" className="text-xl text-white">
                 {counterparty.averageRating.toFixed(1)}⭐
-              </Text>
-              <Text className="text-[10px] text-white/40 uppercase font-bold">Rating</Text>
+              </AppText>
+              <AppText variant="label" weight="bold" className="text-white/40">Rating</AppText>
             </View>
           </View>
         </View>
 
         {/* Trade Details */}
         <View className="glass rounded-2xl p-6 mb-4">
-          <Text className="text-[10px] font-bold uppercase tracking-widest text-white/40 mb-4">Trade Details</Text>
+          <AppText variant="label" className="text-white/40 mb-4">Trade Details</AppText>
 
           <View className="space-y-3">
             <View className="flex-row justify-between border-b border-white/5 pb-2">
-              <Text className="text-white/60">You're buying</Text>
-              <Text className="font-bold text-white">
+              <AppText className="text-white/60">You're buying</AppText>
+              <AppText weight="bold" className="text-white">
                 {formatCrypto(trade.cryptoAmount, trade.offer.cryptoAsset)}
-              </Text>
+              </AppText>
             </View>
             <View className="flex-row justify-between border-b border-white/5 pb-2">
-              <Text className="text-white/60">You'll pay</Text>
-              <Text className="font-bold text-white">
+              <AppText className="text-white/60">You'll pay</AppText>
+              <AppText weight="bold" className="text-white">
                 {formatCurrency(trade.fiatAmount, trade.offer.fiatCurrency)}
-              </Text>
+              </AppText>
             </View>
             <View className="flex-row justify-between border-b border-white/5 pb-2">
-              <Text className="text-white/60">Payment method</Text>
-              <Text className="font-bold text-white">
+              <AppText className="text-white/60">Payment method</AppText>
+              <AppText weight="bold" className="text-white">
                 {trade.offer.paymentMethod.replace(/_/g, " ")}
-              </Text>
+              </AppText>
             </View>
             <View className="flex-row justify-between">
-              <Text className="text-white/60">
+              <AppText className="text-white/60">
                 Network Fee ({(trade.feePercentage * 100).toFixed(2)}%)
-              </Text>
+              </AppText>
               <View className="items-end">
-                <Text className="font-bold text-white">
+                <AppText weight="bold" className="text-white">
                   {formatCrypto(trade.fee, trade.offer.cryptoAsset)}
-                </Text>
-                <Text className="text-[8px] text-white/30">Tier-based discount active</Text>
+                </AppText>
+                <AppText className="text-[8px] text-white/30">Tier-based discount active</AppText>
               </View>
             </View>
           </View>
@@ -348,7 +350,7 @@ export default function TradeEscrowScreen() {
 
         {/* Escrow Timeline */}
         <View className="bg-white/5 border border-white/10 rounded-2xl p-6 mb-4">
-          <Text className="text-sm text-white/60 mb-6">Escrow Status</Text>
+          <AppText className="text-sm text-white/60 mb-6">Escrow Status</AppText>
 
           <View className="space-y-6">
             <TimelineStep
@@ -382,47 +384,47 @@ export default function TradeEscrowScreen() {
         {/* Payment Instructions */}
         <View className="bg-indigo-500/10 border border-indigo-500/20 rounded-2xl p-6 mb-4">
           <TouchableOpacity className="flex-row items-center justify-between mb-4">
-            <Text className="text-lg font-semibold text-white">
+            <AppText weight="semibold" className="text-lg text-white">
               Payment Instructions
-            </Text>
-            <Text className="text-indigo-400">▼</Text>
+            </AppText>
+            <AppText className="text-indigo-400">▼</AppText>
           </TouchableOpacity>
 
           <View className="bg-white/5 rounded-lg p-4 space-y-2">
             <View className="flex-row justify-between">
-              <Text className="text-white/60">Amount</Text>
-              <Text className="font-semibold text-white">
+              <AppText className="text-white/60">Amount</AppText>
+              <AppText weight="semibold" className="text-white">
                 {formatCurrency(trade.fiatAmount, trade.offer.fiatCurrency)}
-              </Text>
+              </AppText>
             </View>
             <View className="flex-row justify-between">
-              <Text className="text-white/60">Bank</Text>
-              <Text className="font-semibold text-white">
+              <AppText className="text-white/60">Bank</AppText>
+              <AppText weight="semibold" className="text-white">
                 {trade.offer.paymentDetails.bankName}
-              </Text>
+              </AppText>
             </View>
             <View className="flex-row justify-between">
-              <Text className="text-white/60">Account</Text>
-              <Text className="font-semibold text-white">
+              <AppText className="text-white/60">Account</AppText>
+              <AppText weight="semibold" className="text-white">
                 {trade.offer.paymentDetails.accountNumber}
-              </Text>
+              </AppText>
             </View>
             <View className="flex-row justify-between">
-              <Text className="text-white/60">Reference</Text>
-              <Text className="font-semibold text-indigo-400">
+              <AppText className="text-white/60">Reference</AppText>
+              <AppText weight="semibold" className="text-indigo-400">
                 #{trade.id.slice(0, 8)}
-              </Text>
+              </AppText>
             </View>
           </View>
         </View>
 
         {/* Safety Notice */}
         <View className="bg-yellow-500/10 border border-yellow-500/20 rounded-2xl p-4 mb-6">
-          <Text className="text-yellow-400 font-medium mb-2">⚠️ Important</Text>
-          <Text className="text-yellow-500/70 text-sm">
+          <AppText weight="medium" className="text-yellow-400 mb-2">⚠️ Important</AppText>
+          <AppText variant="caption" className="text-yellow-500/70">
             Only confirm after verifying payment in your bank account. Funds are
             safely held in Solana escrow.
-          </Text>
+          </AppText>
         </View>
 
         {/* Action Buttons */}
@@ -432,9 +434,9 @@ export default function TradeEscrowScreen() {
               className="bg-blue-600 rounded-full py-4 shadow-sm"
               onPress={() => handleDeposit()}
             >
-              <Text className="text-white font-bold text-center text-lg">
+              <AppText weight="bold" className="text-white text-center text-lg">
                 Deposit into Escrow
-              </Text>
+              </AppText>
             </TouchableOpacity>
           )}
 
@@ -443,9 +445,9 @@ export default function TradeEscrowScreen() {
               className="bg-blue-600 rounded-full py-4 shadow-sm"
               onPress={() => markSent()}
             >
-              <Text className="text-white font-bold text-center text-lg">
+              <AppText weight="bold" className="text-white text-center text-lg">
                 I've Sent the Payment
-              </Text>
+              </AppText>
             </TouchableOpacity>
           )}
 
@@ -454,15 +456,15 @@ export default function TradeEscrowScreen() {
               className="bg-green-600 rounded-full py-4 shadow-sm"
               onPress={() => handleRelease()}
             >
-              <Text className="text-white font-bold text-center text-lg">
+              <AppText weight="bold" className="text-white text-center text-lg">
                 Confirm & Release Crypto
-              </Text>
+              </AppText>
             </TouchableOpacity>
           )}
 
           {isBuyer && isFiatSent && (
              <View className="bg-purple-500/10 p-4 rounded-xl items-center border border-purple-500/20">
-               <Text className="text-purple-400 font-medium">Payment reported. Waiting for seller to release.</Text>
+               <AppText weight="medium" className="text-purple-400">Payment reported. Waiting for seller to release.</AppText>
              </View>
           )}
 
@@ -471,28 +473,28 @@ export default function TradeEscrowScreen() {
               className="flex-1 border-2 border-blue-500 rounded-full py-3"
               onPress={() => router.push(`/trade/chat?id=${id}`)}
             >
-              <Text className="text-blue-600 font-semibold text-center">
+              <AppText weight="semibold" className="text-blue-600 text-center">
                 💬 Chat
-              </Text>
+              </AppText>
             </TouchableOpacity>
             <TouchableOpacity className="flex-1 border-2 border-red-500 rounded-full py-3">
-              <Text className="text-red-600 font-semibold text-center">
+              <AppText weight="semibold" className="text-red-600 text-center">
                 ⚠️ Dispute
-              </Text>
+              </AppText>
             </TouchableOpacity>
           </View>
         </View>
 
         {/* Escrow Info */}
         <View className="items-center mb-8">
-          <Text className="text-xs text-white/40 text-center mb-1">
+          <AppText variant="caption" className="text-white/40 text-center mb-1">
             Funds are safely held in Solana escrow
-          </Text>
+          </AppText>
           {trade.escrowSignature && (
             <TouchableOpacity onPress={() => Linking.openURL(getExplorerUrl(trade.escrowSignature))}>
-              <Text className="text-xs text-indigo-400 underline text-center">
+              <AppText variant="caption" className="text-indigo-400 underline text-center">
                 🔗 View Proof on Explorer: {trade.escrowSignature.slice(0, 8)}...
-              </Text>
+              </AppText>
             </TouchableOpacity>
           )}
         </View>
@@ -509,16 +511,17 @@ function TimelineStep({ icon, title, timestamp, completed, active }: any) {
           completed ? "bg-green-500/10" : active ? "bg-blue-500/10" : "bg-white/5"
         }`}
       >
-        <Text className="text-lg">{icon}</Text>
+        <AppText className="text-lg">{icon}</AppText>
       </View>
       <View className="flex-1">
-        <Text
-          className={`font-medium ${completed ? "text-white" : "text-white/40"}`}
+        <AppText
+          weight="medium"
+          className={`${completed ? "text-white" : "text-white/40"}`}
         >
           {title}
-        </Text>
+        </AppText>
         {timestamp && (
-          <Text className="text-[10px] text-white/20 mt-1 uppercase font-bold">{timestamp}</Text>
+          <AppText variant="label" className="text-white/20 mt-1">{timestamp}</AppText>
         )}
       </View>
     </View>

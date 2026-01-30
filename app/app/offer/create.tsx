@@ -7,6 +7,7 @@ import {
   TextInput,
   Switch,
 } from "react-native";
+import { AppText } from "@/components/ui/AppText";
 import { useRouter } from "expo-router";
 import { useMutation } from "@apollo/client";
 import { CREATE_OFFER_MUTATION } from "@/graphql/mutations";
@@ -74,11 +75,11 @@ export default function CreateOfferScreen() {
       <View className="bg-white pt-12 pb-4 px-6 border-b border-gray-200">
         <View className="flex-row items-center justify-between mb-2">
           <TouchableOpacity onPress={() => router.back()}>
-            <Text className="text-2xl">←</Text>
+            <AppText className="text-2xl">←</AppText>
           </TouchableOpacity>
-          <Text className="text-xl font-bold text-gray-900">
+          <AppText weight="bold" className="text-xl text-gray-900">
             Create Sell Offer
-          </Text>
+          </AppText>
           {user && (
             <TierBadge
               tier={user.fairTier}
@@ -88,28 +89,29 @@ export default function CreateOfferScreen() {
             />
           )}
         </View>
-        <Text className="text-sm text-gray-500 text-center">
+        <AppText className="text-sm text-gray-500 text-center">
           Your limits: ${maxTradeLimit.toLocaleString()}/trade
-        </Text>
+        </AppText>
       </View>
 
       <ScrollView className="flex-1 px-6 pt-6">
         {/* Asset Selection */}
         <View className="bg-white rounded-2xl p-6 mb-4">
-          <Text className="text-gray-600 text-sm mb-2">I want to sell</Text>
+          <AppText className="text-gray-600 text-sm mb-2">I want to sell</AppText>
 
           <TouchableOpacity className="flex-row items-center justify-between p-3 bg-gray-50 rounded-lg mb-4">
             <View className="flex-row items-center">
               <View className="w-8 h-8 bg-blue-500 rounded-full mr-3" />
-              <Text className="text-lg font-semibold text-gray-900">
+              <AppText weight="bold" className="text-lg text-gray-900">
                 {formData.cryptoAsset}
-              </Text>
+              </AppText>
             </View>
-            <Text className="text-gray-400">▼</Text>
+            <AppText className="text-gray-400">▼</AppText>
           </TouchableOpacity>
 
           <TextInput
             className="text-3xl font-bold text-gray-900 mb-2"
+            style={{ fontFamily: "Outfit_700Bold" }}
             placeholder="0.00"
             keyboardType="decimal-pad"
             value={formData.cryptoAmount}
@@ -117,56 +119,59 @@ export default function CreateOfferScreen() {
               setFormData({ ...formData, cryptoAmount: text })
             }
           />
-          <Text className="text-sm text-gray-500">Available: 1,450 USDC</Text>
-          <Text className="text-sm text-gray-400 mt-1">
+          <AppText variant="caption" className="text-gray-500">Available: 1,450 USDC</AppText>
+          <AppText variant="caption" className="text-gray-400 mt-1">
             ≈ ${formData.cryptoAmount || "0.00"} USD
-          </Text>
+          </AppText>
         </View>
 
         {/* Pricing */}
         <View className="bg-white rounded-2xl p-6 mb-4">
-          <Text className="text-gray-600 text-sm mb-4">
+          <AppText className="text-gray-600 text-sm mb-4">
             Price per {formData.cryptoAsset}
-          </Text>
+          </AppText>
 
           <View className="flex-row items-center mb-2">
             <TextInput
               className="flex-1 text-2xl font-bold text-gray-900 mr-2"
+              style={{ fontFamily: "Outfit_700Bold" }}
               placeholder="0.00"
               keyboardType="decimal-pad"
               value={formData.price}
               onChangeText={(text) => setFormData({ ...formData, price: text })}
             />
-            <Text className="text-gray-500 text-lg">
+            <AppText weight="medium" className="text-gray-500 text-lg">
               {formData.fiatCurrency}
-            </Text>
+            </AppText>
           </View>
 
-          <Text className="text-sm text-gray-500 mb-1">
+          <AppText variant="caption" className="text-gray-500 mb-1">
             Market rate: ${marketRate.toFixed(2)}
-          </Text>
+          </AppText>
           {priceVsMarket !== 0 && (
-            <Text
-              className={`text-sm font-medium ${priceVsMarket > 0 ? "text-green-600" : "text-red-600"}`}
+            <AppText
+              variant="caption"
+              weight="medium"
+              className={`${priceVsMarket > 0 ? "text-green-600" : "text-red-600"}`}
             >
               {priceVsMarket > 0 ? "+" : ""}
               {priceVsMarket.toFixed(2)}% vs market
-            </Text>
+            </AppText>
           )}
 
           <View className="bg-blue-50 rounded-lg p-4 mt-4">
-            <Text className="text-sm text-gray-600 mb-1">
+            <AppText variant="caption" className="text-gray-600 mb-1">
               Total you'll receive
-            </Text>
-            <Text className="text-3xl font-bold text-gray-900">
+            </AppText>
+            <AppText weight="bold" className="text-3xl text-gray-900">
               ${totalReceive.toFixed(2)}
-            </Text>
+            </AppText>
           </View>
         </View>
 
         {/* Payment Method */}
         <View className="bg-white rounded-2xl p-6 mb-4">
-          <Text className="text-gray-600 text-sm mb-4">Payment Method</Text>
+          <AppText className="text-gray-600 text-sm mb-4">Payment Method</AppText>
 
           <TouchableOpacity
             className={`flex-row items-center p-4 rounded-lg mb-2 ${
@@ -190,8 +195,8 @@ export default function CreateOfferScreen() {
               )}
             </View>
             <View className="flex-1">
-              <Text className="font-semibold text-gray-900">Bank Transfer</Text>
-              <Text className="text-xs text-green-600">Recommended</Text>
+              <AppText weight="semibold" className="text-gray-900">Bank Transfer</AppText>
+              <AppText variant="caption" className="text-green-600">Recommended</AppText>
             </View>
           </TouchableOpacity>
 
@@ -201,10 +206,10 @@ export default function CreateOfferScreen() {
           >
             <View className="w-5 h-5 rounded-full border-2 border-gray-300 mr-3" />
             <View className="flex-1">
-              <Text className="font-semibold text-gray-500">Cash Meetup</Text>
-              <Text className="text-xs text-gray-400">
+              <AppText weight="semibold" className="text-gray-500">Cash Meetup</AppText>
+              <AppText variant="caption" className="text-gray-400">
                 Requires Gold tier 🔒
-              </Text>
+              </AppText>
             </View>
           </TouchableOpacity>
         </View>
@@ -212,17 +217,18 @@ export default function CreateOfferScreen() {
         {/* Trade Limits */}
         <View className="bg-white rounded-2xl p-6 mb-4">
           <View className="flex-row items-center justify-between mb-4">
-            <Text className="text-gray-600 text-sm">Trade Limits</Text>
+            <AppText className="text-gray-600 text-sm">Trade Limits</AppText>
             <View className="flex-row items-center">
-              <Text className="text-xs text-gray-500 mr-1">🔒</Text>
-              <Text className="text-xs text-gray-500">Based on FairScore</Text>
+              <AppText variant="caption" className="text-gray-500 mr-1">🔒</AppText>
+              <AppText variant="caption" className="text-gray-500">Based on FairScore</AppText>
             </View>
           </View>
 
           <View className="mb-4">
-            <Text className="text-gray-600 text-sm mb-2">Minimum trade</Text>
+            <AppText className="text-gray-600 text-sm mb-2">Minimum trade</AppText>
             <TextInput
-              className="bg-gray-50 rounded-lg p-3 text-lg text-gray-900"
+              className="bg-gray-50 rounded-lg p-3 text-lg text-gray-900 font-bold"
+              style={{ fontFamily: "Outfit_700Bold" }}
               placeholder="50"
               keyboardType="decimal-pad"
               value={formData.minLimit}
@@ -233,9 +239,10 @@ export default function CreateOfferScreen() {
           </View>
 
           <View>
-            <Text className="text-gray-600 text-sm mb-2">Maximum trade</Text>
+            <AppText className="text-gray-600 text-sm mb-2">Maximum trade</AppText>
             <TextInput
-              className="bg-gray-50 rounded-lg p-3 text-lg text-gray-900"
+              className="bg-gray-50 rounded-lg p-3 text-lg text-gray-900 font-bold"
+              style={{ fontFamily: "Outfit_700Bold" }}
               placeholder={maxTradeLimit.toString()}
               keyboardType="decimal-pad"
               value={formData.maxLimit}
@@ -243,37 +250,37 @@ export default function CreateOfferScreen() {
                 setFormData({ ...formData, maxLimit: text })
               }
             />
-            <Text className="text-xs text-gray-500 mt-1">
+            <AppText variant="caption" className="text-gray-500 mt-1">
               Your {user?.fairTier} tier allows max $
               {maxTradeLimit.toLocaleString()}
-            </Text>
+            </AppText>
           </View>
         </View>
 
         {/* Additional Settings */}
         <View className="bg-white rounded-2xl p-6 mb-4">
-          <Text className="text-gray-600 text-sm mb-4">
+          <AppText className="text-gray-600 text-sm mb-4">
             Additional Settings
-          </Text>
+          </AppText>
 
           <View className="flex-row items-center justify-between mb-4">
             <View>
-              <Text className="text-gray-900 font-medium">Trading window</Text>
-              <Text className="text-sm text-gray-500">2 hours</Text>
+              <AppText weight="medium" className="text-gray-900">Trading window</AppText>
+              <AppText variant="caption" className="text-gray-500">2 hours</AppText>
             </View>
             <TouchableOpacity className="px-4 py-2 bg-gray-100 rounded-lg">
-              <Text className="text-gray-700">Change</Text>
+              <AppText className="text-gray-700">Change</AppText>
             </TouchableOpacity>
           </View>
 
           <View className="flex-row items-center justify-between">
             <View>
-              <Text className="text-gray-900 font-medium">
+              <AppText weight="medium" className="text-gray-900">
                 Auto-accept trades
-              </Text>
-              <Text className="text-sm text-gray-500">
+              </AppText>
+              <AppText variant="caption" className="text-gray-500">
                 Automatically accept matching orders
-              </Text>
+              </AppText>
             </View>
             <Switch
               value={formData.autoAccept}
@@ -287,19 +294,19 @@ export default function CreateOfferScreen() {
         {/* Warning Card for Low Tier */}
         {user?.fairTier === "SILVER" && (
           <View className="bg-yellow-50 border border-yellow-200 rounded-2xl p-4 mb-4">
-            <Text className="text-yellow-800 font-medium mb-2">
+            <AppText weight="medium" className="text-yellow-800 mb-2">
               ⚠️ Tier Limitation
-            </Text>
-            <Text className="text-yellow-700 text-sm mb-2">
+            </AppText>
+            <AppText variant="caption" className="text-yellow-700 mb-2">
               Your Silver tier allows max ${maxTradeLimit.toLocaleString()}{" "}
               trades
-            </Text>
+            </AppText>
             <TouchableOpacity
               onPress={() => router.push("/profile/boost-score")}
             >
-              <Text className="text-yellow-900 text-sm font-medium underline">
+              <AppText variant="caption" weight="medium" className="text-yellow-900 underline">
                 Upgrade to Gold for higher limits →
-              </Text>
+              </AppText>
             </TouchableOpacity>
           </View>
         )}
@@ -310,9 +317,9 @@ export default function CreateOfferScreen() {
           onPress={handleSubmit}
           disabled={!canCreateOffer || loading}
         >
-          <Text className="text-white font-bold text-center text-lg">
+          <AppText weight="bold" className="text-white text-center text-lg">
             {loading ? "Creating..." : "Create Offer"}
-          </Text>
+          </AppText>
         </TouchableOpacity>
       </ScrollView>
     </View>

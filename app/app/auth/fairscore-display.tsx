@@ -7,6 +7,7 @@ import {
   Animated,
   Easing,
 } from "react-native";
+import { AppText } from "@/components/ui/AppText";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { useAuthStore } from "@/store/auth";
@@ -113,8 +114,8 @@ export default function FairScoreDisplayScreen() {
               <View className="w-20 h-20 bg-green-500/20 border-2 border-green-500/40 rounded-3xl items-center justify-center mb-4">
                 <Ionicons name="checkmark-circle" size={48} color="#22c55e" />
               </View>
-              {/* <Text className="text-white text-xl font-bold mb-1">Welcome to Vouchd!</Text> */}
-              <Text className="text-white/70 text-md">Your trust profile is ready</Text>
+              {/* <AppText className="text-white text-xl font-bold mb-1">Welcome to Vouchd!</AppText> */}
+              <AppText weight="medium" className="text-white/70 text-md">Your trust profile is ready</AppText>
             </View>
 
             {/* Hero Score Card */}
@@ -131,12 +132,12 @@ export default function FairScoreDisplayScreen() {
                 
                 {/* Score Section */}
                 <View className="items-center mb-6">
-                  <Text className="text-white/40 text-xs font-bold tracking-widest uppercase mb-2">
+                  <AppText variant="label" className="text-white/40 mb-2">
                     Your FairScore
-                  </Text>
+                  </AppText>
                   <View className="flex-row items-baseline">
-                    <Text className="text-7xl font-black text-white">{displayScore}</Text>
-                    <Text className="text-2xl text-white/30 ml-1">/1000</Text>
+                    <AppText weight="extrabold" className="text-7xl text-white">{displayScore}</AppText>
+                    <AppText className="text-2xl text-white/30 ml-1">/1000</AppText>
                   </View>
                 </View>
 
@@ -149,24 +150,24 @@ export default function FairScoreDisplayScreen() {
                     className="px-6 py-3 rounded-full flex-row items-center"
                     style={{ shadowColor: tierConfig.color, shadowRadius: 20, shadowOpacity: 0.5 }}
                   >
-                    <Text className="text-2xl mr-2">{tierConfig.icon}</Text>
-                    <Text className="text-white font-bold text-lg tracking-wide">{tierKey} TIER</Text>
+                    <AppText className="text-2xl mr-2">{tierConfig.icon}</AppText>
+                    <AppText weight="bold" className="text-white text-lg tracking-wide">{tierKey} TIER</AppText>
                   </LinearGradient>
                 </View>
 
                 {/* Score Pillars */}
-                <View className="flex-row mt-6 gap-3">
+                 <View className="flex-row mt-6 gap-3">
                   <View className="flex-1 bg-white/5 rounded-xl p-4 items-center border border-white/10">
-                    <Text className="text-blue-400 text-2xl font-bold">{user.walletScore || 0}</Text>
-                    <Text className="text-white/40 text-xs mt-1">Wallet Score</Text>
+                    <AppText weight="bold" className="text-blue-400 text-2xl">{user.walletScore || 0}</AppText>
+                    <AppText variant="caption" className="text-white/40 mt-1">Wallet Score</AppText>
                   </View>
                   <View className="flex-1 bg-white/5 rounded-xl p-4 items-center border border-white/10">
-                    <Text className="text-purple-400 text-2xl font-bold">{user.socialScore || 0}</Text>
-                    <Text className="text-white/40 text-xs mt-1">Social Score</Text>
+                    <AppText weight="bold" className="text-purple-400 text-2xl">{user.socialScore || 0}</AppText>
+                    <AppText variant="caption" className="text-white/40 mt-1">Social Score</AppText>
                   </View>
                   <View className="flex-1 bg-white/5 rounded-xl p-4 items-center border border-white/10">
-                    <Text className="text-green-400 text-2xl font-bold">{user.starRating || 0}★</Text>
-                    <Text className="text-white/40 text-xs mt-1">Rating</Text>
+                    <AppText weight="bold" className="text-green-400 text-2xl">{user.starRating || 0}★</AppText>
+                    <AppText variant="caption" className="text-white/40 mt-1">Rating</AppText>
                   </View>
                 </View>
               </LinearGradient>
@@ -176,9 +177,9 @@ export default function FairScoreDisplayScreen() {
             <View className="bg-white/5 border border-white/10 rounded-2xl p-5 mb-6">
               <View className="flex-row items-center mb-4">
                 <View className="w-10 h-10 bg-yellow-500/20 rounded-xl items-center justify-center mr-3">
-                  <Text className="text-xl">🎁</Text>
+                  <AppText className="text-xl">🎁</AppText>
                 </View>
-                <Text className="text-white font-bold text-lg">Your Benefits</Text>
+                <AppText weight="bold" className="text-white text-lg">Your Benefits</AppText>
               </View>
 
               <View className="gap-3">
@@ -209,22 +210,22 @@ export default function FairScoreDisplayScreen() {
               </View>
             </View>
 
-            {/* Quick Stats */}
+             {/* Quick Stats */}
             <View className="flex-row gap-3 mb-8">
               <View className="flex-1 bg-white/5 border border-white/10 rounded-xl p-4 items-center">
-                <Text className="text-2xl mb-1">📈</Text>
-                <Text className="text-white font-bold">{user.totalTrades || 0}</Text>
-                <Text className="text-white/30 text-xs">Trades</Text>
+                <AppText className="text-2xl mb-1">📈</AppText>
+                <AppText weight="bold" className="text-white">{user.totalTrades || 0}</AppText>
+                <AppText variant="caption" className="text-white/30">Trades</AppText>
               </View>
               <View className="flex-1 bg-white/5 border border-white/10 rounded-xl p-4 items-center">
-                <Text className="text-2xl mb-1">{user.kycVerified ? "✓" : "○"}</Text>
-                <Text className="text-white font-bold">{user.kycVerified ? "Verified" : "Basic"}</Text>
-                <Text className="text-white/30 text-xs">Status</Text>
+                <AppText className="text-2xl mb-1">{user.kycVerified ? "✓" : "○"}</AppText>
+                <AppText weight="bold" className="text-white">{user.kycVerified ? "Verified" : "Basic"}</AppText>
+                <AppText variant="caption" className="text-white/30">Status</AppText>
               </View>
               <View className="flex-1 bg-white/5 border border-white/10 rounded-xl p-4 items-center">
-                <Text className="text-2xl mb-1">🏆</Text>
-                <Text className="text-white font-bold">{user.fairBadges?.length || 0}</Text>
-                <Text className="text-white/30 text-xs">Badges</Text>
+                <AppText className="text-2xl mb-1">🏆</AppText>
+                <AppText weight="bold" className="text-white">{user.fairBadges?.length || 0}</AppText>
+                <AppText variant="caption" className="text-white/30">Badges</AppText>
               </View>
             </View>
 

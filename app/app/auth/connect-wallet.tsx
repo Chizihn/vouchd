@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
-import { View, Text, TouchableOpacity, Alert, ActivityIndicator, ScrollView } from "react-native";
+import { View, TouchableOpacity, Alert, ActivityIndicator, ScrollView } from "react-native";
+import { AppText } from "@/components/ui/AppText";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -87,37 +88,37 @@ export default function ConnectWalletScreen() {
           {/* Header */}
           <View className="items-center mb-10">
             <View className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl items-center justify-center mb-8 shadow-xl" style={{ shadowColor: '#6366f1', shadowRadius: 30, shadowOpacity: 0.5 }}>
-              <Text className="text-5xl">🔗</Text>
+              <AppText className="text-5xl">🔗</AppText>
             </View>
-            <Text className="text-3xl font-bold text-white text-center mb-3">
+            <AppText weight="bold" className="text-3xl text-white text-center mb-3">
               Connect Your Wallet
-            </Text>
-            <Text className="text-white/50 text-center text-base px-4">
+            </AppText>
+            <AppText className="text-white/50 text-center text-base px-4">
               Link your Solana wallet to start trading with verified peers
-            </Text>
+            </AppText>
           </View>
 
           {/* Supported Wallets Display */}
           <View className="bg-white/5 border border-white/10 rounded-2xl p-5 mb-8">
-            <Text className="text-white/40 text-xs uppercase tracking-widest mb-4 text-center">Supported Wallets</Text>
+            <AppText variant="label" className="text-white/40 mb-4 text-center">Supported Wallets</AppText>
             <View className="flex-row justify-center items-center gap-6">
               <View className="items-center">
                 <View className="w-14 h-14 bg-purple-500/20 rounded-xl items-center justify-center mb-2">
-                  <Text className="text-2xl">👻</Text>
+                  <AppText className="text-2xl">👻</AppText>
                 </View>
-                <Text className="text-white/60 text-xs">Phantom</Text>
+                <AppText variant="caption" className="text-white/60">Phantom</AppText>
               </View>
               <View className="items-center">
                 <View className="w-14 h-14 bg-orange-500/20 rounded-xl items-center justify-center mb-2">
-                  <Text className="text-2xl">🔥</Text>
+                  <AppText className="text-2xl">🔥</AppText>
                 </View>
-                <Text className="text-white/60 text-xs">Solflare</Text>
+                <AppText variant="caption" className="text-white/60">Solflare</AppText>
               </View>
               <View className="items-center">
                 <View className="w-14 h-14 bg-red-500/20 rounded-xl items-center justify-center mb-2">
-                  <Text className="text-2xl">🎒</Text>
+                  <AppText className="text-2xl">🎒</AppText>
                 </View>
-                <Text className="text-white/60 text-xs">Backpack</Text>
+                <AppText variant="caption" className="text-white/60">Backpack</AppText>
               </View>
             </View>
           </View>
@@ -138,10 +139,10 @@ export default function ConnectWalletScreen() {
               {isBusy ? (
                 <>
                   <ActivityIndicator color="#FFFFFF" style={{ marginRight: 10 }} />
-                  <Text className="text-white font-bold text-lg">Connecting...</Text>
+                  <AppText weight="bold" className="text-white text-lg">Connecting...</AppText>
                 </>
               ) : (
-                <Text className="text-white font-bold text-lg">Connect Wallet</Text>
+                <AppText weight="bold" className="text-white text-lg">Connect Wallet</AppText>
               )}
             </LinearGradient>
           </TouchableOpacity>
@@ -149,24 +150,24 @@ export default function ConnectWalletScreen() {
           {/* Info Card */}
           <View className="bg-white/5 border border-white/10 rounded-2xl p-5 mb-6">
             <View className="flex-row items-center mb-3">
-              <Text className="text-lg mr-2">🔒</Text>
-              <Text className="text-white font-semibold">Your Wallet, Your Keys</Text>
+              <AppText className="text-lg mr-2">🔒</AppText>
+              <AppText weight="semibold" className="text-white">Your Wallet, Your Keys</AppText>
             </View>
-            <Text className="text-white/40 text-sm leading-5">
+            <AppText className="text-white/40 text-sm leading-5">
               We'll fetch your FairScore based on your on-chain history. No transactions without your explicit approval.
-            </Text>
+            </AppText>
           </View>
 
           {/* Footer */}
           <View className="items-center pb-6">
             <View className="flex-row justify-center items-center mb-3">
               <View className="w-2 h-2 bg-green-500 rounded-full mr-2" />
-              <Text className="text-white/30 text-sm">Secure connection via Solana MWA</Text>
+              <AppText variant="caption" className="text-white/30 text-center">Secure connection via Solana MWA</AppText>
             </View>
             <TouchableOpacity>
-              <Text className="text-white/30 text-xs text-center underline">
+              <AppText variant="caption" className="text-white/30 text-center underline">
                 New to Solana? Learn about wallets
-              </Text>
+              </AppText>
             </TouchableOpacity>
           </View>
         </ScrollView>

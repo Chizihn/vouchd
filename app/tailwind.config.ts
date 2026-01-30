@@ -13,6 +13,15 @@ module.exports = {
         pillarMedium: "#F59E0B",
         pillarLow: "#EF4444",
       },
+      fontFamily: {
+        sans: ["Outfit_400Regular", "sans-serif"],
+        outfit: ["Outfit_400Regular"],
+        "outfit-light": ["Outfit_300Light"],
+        "outfit-medium": ["Outfit_500Medium"],
+        "outfit-semibold": ["Outfit_600SemiBold"],
+        "outfit-bold": ["Outfit_700Bold"],
+        "outfit-extrabold": ["Outfit_800ExtraBold"],
+      },
     }
   },
   plugins: [],

@@ -9,6 +9,7 @@ import {
   Alert,
   ActivityIndicator,
 } from "react-native";
+import { AppText } from "@/components/ui/AppText";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useRouter } from "expo-router";
 import { useMutation } from "@apollo/client";
@@ -105,13 +106,13 @@ export default function CreateOfferScreen() {
       <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
         {/* Header */}
         <View className="px-5 pt-4 pb-4 border-b border-white/5">
-          <Text className="text-2xl font-bold text-white mb-1">Create Offer</Text>
-          <Text className="text-white/40 text-sm">
+          <AppText variant="h3" weight="bold" className="text-white mb-1">Create Offer</AppText>
+          <AppText variant="caption" className="text-white/40">
             {canCreateOffer 
               ? `Your tier allows max $${maxTradeLimit.toLocaleString()}/trade`
               : "⚠️ Bronze tier required to sell"
             }
-          </Text>
+          </AppText>
         </View>
 
         <KeyboardAwareScrollView 
@@ -124,19 +125,19 @@ export default function CreateOfferScreen() {
           {/* Cannot Create Warning */}
           {!canCreateOffer && (
             <View className="bg-yellow-500/10 border border-yellow-500/30 rounded-2xl p-4 mt-4 flex-row items-center">
-              <Text className="text-2xl mr-3">🔒</Text>
+              <AppText className="text-2xl mr-3">🔒</AppText>
               <View className="flex-1">
-                <Text className="text-yellow-400 font-bold">Upgrade to Bronze</Text>
-                <Text className="text-yellow-400/70 text-sm">
+                <AppText weight="bold" className="text-yellow-400">Upgrade to Bronze</AppText>
+                <AppText variant="caption" className="text-yellow-400/70">
                   Increase your FairScore to 300+ to create offers
-                </Text>
+                </AppText>
               </View>
             </View>
           )}
 
           {/* Asset Selection */}
           <View className="mt-4">
-            <Text className="text-white/40 text-xs font-bold uppercase mb-3">I want to sell</Text>
+            <AppText variant="label" className="text-white/40 mb-3">I want to sell</AppText>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {CRYPTO_ASSETS.map((asset) => (
                 <TouchableOpacity
@@ -148,12 +149,12 @@ export default function CreateOfferScreen() {
                   }`}
                   onPress={() => setFormData({ ...formData, cryptoAsset: asset.id })}
                 >
-                  <Text className="text-xl mr-2">{asset.icon}</Text>
-                  <Text className={`font-bold ${
+                  <AppText className="text-xl mr-2">{asset.icon}</AppText>
+                  <AppText weight="bold" className={`${
                     formData.cryptoAsset === asset.id ? "text-white" : "text-white/60"
                   }`}>
                     {asset.id}
-                  </Text>
+                  </AppText>
                 </TouchableOpacity>
               ))}
             </ScrollView>
@@ -161,50 +162,52 @@ export default function CreateOfferScreen() {
 
           {/* Amount */}
           <View className="mt-6 bg-white/5 border border-white/10 rounded-2xl p-5">
-            <Text className="text-white/40 text-xs font-bold uppercase mb-3">Amount</Text>
+            <AppText variant="label" className="text-white/40 mb-3">Amount</AppText>
             <View className="flex-row items-center">
               <TextInput
                 className="flex-1 text-4xl font-bold text-white"
+                style={{ fontFamily: "Outfit_700Bold" }}
                 placeholder="0.00"
                 placeholderTextColor="rgba(255,255,255,0.2)"
                 keyboardType="decimal-pad"
                 value={formData.cryptoAmount}
                 onChangeText={(text) => setFormData({ ...formData, cryptoAmount: text })}
               />
-              <Text className="text-white/40 text-xl ml-2">{formData.cryptoAsset}</Text>
+              <AppText weight="medium" className="text-white/40 text-xl ml-2">{formData.cryptoAsset}</AppText>
             </View>
           </View>
 
           {/* Price */}
           <View className="mt-4 bg-white/5 border border-white/10 rounded-2xl p-5">
-            <Text className="text-white/40 text-xs font-bold uppercase mb-3">
+            <AppText variant="label" className="text-white/40 mb-3">
               Price per {formData.cryptoAsset}
-            </Text>
+            </AppText>
             <View className="flex-row items-center">
-              <Text className="text-white/40 text-xl mr-2">$</Text>
+              <AppText weight="medium" className="text-white/40 text-xl mr-2">$</AppText>
               <TextInput
                 className="flex-1 text-4xl font-bold text-white"
+                style={{ fontFamily: "Outfit_700Bold" }}
                 placeholder="1.00"
                 placeholderTextColor="rgba(255,255,255,0.2)"
                 keyboardType="decimal-pad"
                 value={formData.price}
                 onChangeText={(text) => setFormData({ ...formData, price: text })}
               />
-              <Text className="text-white/40 text-xl ml-2">USD</Text>
+              <AppText weight="medium" className="text-white/40 text-xl ml-2">USD</AppText>
             </View>
           </View>
 
           {/* Total Preview */}
           {totalReceive > 0 && (
             <View className="mt-4 bg-green-500/10 border border-green-500/30 rounded-2xl p-5">
-              <Text className="text-green-400/70 text-xs font-bold uppercase mb-1">You'll receive</Text>
-              <Text className="text-green-400 text-3xl font-bold">${totalReceive.toFixed(2)}</Text>
+              <AppText variant="label" className="text-green-400/70 mb-1">You'll receive</AppText>
+              <AppText weight="bold" className="text-green-400 text-3xl">${totalReceive.toFixed(2)}</AppText>
             </View>
           )}
 
           {/* Payment Method */}
           <View className="mt-6">
-            <Text className="text-white/40 text-xs font-bold uppercase mb-3">Payment Method</Text>
+            <AppText variant="label" className="text-white/40 mb-3">Payment Method</AppText>
             {PAYMENT_METHODS.map((method) => (
               <TouchableOpacity
                 key={method.id}
@@ -215,12 +218,12 @@ export default function CreateOfferScreen() {
                 }`}
                 onPress={() => setFormData({ ...formData, paymentMethod: method.id })}
               >
-                <Text className="text-xl mr-3">{method.icon}</Text>
-                <Text className={`font-bold flex-1 ${
+                <AppText className="text-xl mr-3">{method.icon}</AppText>
+                <AppText weight="bold" className={`flex-1 ${
                   formData.paymentMethod === method.id ? "text-white" : "text-white/60"
                 }`}>
                   {method.name}
-                </Text>
+                </AppText>
                 {formData.paymentMethod === method.id && (
                   <Ionicons name="checkmark-circle" size={20} color="#6366f1" />
                 )}
@@ -231,9 +234,10 @@ export default function CreateOfferScreen() {
           {/* Trade Limits */}
           <View className="mt-6 flex-row gap-3">
             <View className="flex-1 bg-white/5 border border-white/10 rounded-xl p-4">
-              <Text className="text-white/40 text-xs font-bold mb-2">Min Trade</Text>
+              <AppText variant="label" className="text-white/40 mb-2">Min Trade</AppText>
               <TextInput
                 className="text-white text-lg font-bold"
+                style={{ fontFamily: "Outfit_700Bold" }}
                 placeholder="$10"
                 placeholderTextColor="rgba(255,255,255,0.3)"
                 keyboardType="decimal-pad"
@@ -242,9 +246,10 @@ export default function CreateOfferScreen() {
               />
             </View>
             <View className="flex-1 bg-white/5 border border-white/10 rounded-xl p-4">
-              <Text className="text-white/40 text-xs font-bold mb-2">Max Trade</Text>
+              <AppText variant="label" className="text-white/40 mb-2">Max Trade</AppText>
               <TextInput
                 className="text-white text-lg font-bold"
+                style={{ fontFamily: "Outfit_700Bold" }}
                 placeholder={`$${maxTradeLimit}`}
                 placeholderTextColor="rgba(255,255,255,0.3)"
                 keyboardType="decimal-pad"
@@ -267,9 +272,9 @@ export default function CreateOfferScreen() {
               {loading ? (
                 <ActivityIndicator color="#fff" style={{ marginRight: 8 }} />
               ) : null}
-              <Text className="text-white font-bold text-lg">
+              <AppText weight="bold" className="text-white text-lg">
                 {loading ? "Creating..." : canCreateOffer ? "Create Offer" : "Create Offer (Demo)"}
-              </Text>
+              </AppText>
             </LinearGradient>
           </TouchableOpacity>
         </KeyboardAwareScrollView>

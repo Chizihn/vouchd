@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+import { AppText } from "@/components/ui/AppText";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { useQuery, useMutation } from "@apollo/client/react";
 import { GET_TRADE_QUERY } from "@/graphql/queries";
@@ -66,7 +67,7 @@ export default function TradeChatScreen() {
   if (loading && !trade) {
     return (
       <View style={{ flex: 1, backgroundColor: THEME.background }} className="items-center justify-center">
-        <Text className="text-white/50">Loading chat...</Text>
+        <AppText className="text-white/50">Loading chat...</AppText>
       </View>
     );
   }
@@ -88,14 +89,14 @@ export default function TradeChatScreen() {
                 <Ionicons name="arrow-back" size={24} color="white" />
               </TouchableOpacity>
               <View className="w-10 h-10 rounded-full bg-indigo-500/20 border border-indigo-500/30 items-center justify-center mr-3">
-                <Text className="text-indigo-400 font-bold">
+                <AppText weight="bold" className="text-indigo-400">
                   {counterparty?.username?.[0]?.toUpperCase() || "?"}
-                </Text>
+                </AppText>
               </View>
               <View>
-                <Text className="text-lg font-bold text-white">
+                <AppText weight="bold" className="text-lg text-white">
                   {counterparty?.username || "Anonymous"}
-                </Text>
+                </AppText>
                 <TierBadge
                   tier={counterparty?.fairTier}
                   score={counterparty?.fairScore}
@@ -108,7 +109,7 @@ export default function TradeChatScreen() {
               className="bg-white/10 px-3 py-1.5 rounded-full border border-white/10"
               onPress={() => router.push(`/trade/${id}` as any)}
             >
-              <Text className="text-white/60 text-xs font-semibold">Details</Text>
+              <AppText variant="label" weight="semibold" className="text-white/60">Details</AppText>
             </TouchableOpacity>
           </View>
         </View>
@@ -122,10 +123,10 @@ export default function TradeChatScreen() {
           {/* Safety Warning */}
           <View className="items-center mb-6">
             <View className="bg-yellow-500/10 border border-yellow-500/20 px-4 py-2 rounded-xl">
-              <Text className="text-yellow-500/80 text-xs text-center">
+              <AppText variant="caption" className="text-yellow-500/80 text-center">
                 ⚠️ Safety First: Never share your password or click suspicious links.
                 Always confirm payment in your bank app.
-              </Text>
+              </AppText>
             </View>
           </View>
 
@@ -138,7 +139,7 @@ export default function TradeChatScreen() {
               >
                 {!isMe && (
                   <View className="w-8 h-8 rounded-full bg-white/10 mr-2 items-center justify-center">
-                    <Text className="text-[10px] text-white/60">{counterparty?.username?.[0]}</Text>
+                    <AppText variant="caption" className="text-white/60">{counterparty?.username?.[0]}</AppText>
                   </View>
                 )}
                 <View
@@ -148,16 +149,17 @@ export default function TradeChatScreen() {
                       : "bg-white/10 border border-white/10 rounded-tl-none"
                   }`}
                 >
-                  <Text className={`${isMe ? "text-white" : "text-white/80"}`}>
+                  <AppText className={`${isMe ? "text-white" : "text-white/80"}`}>
                     {msg.content}
-                  </Text>
-                  <Text
-                    className={`text-[10px] mt-1 ${
+                  </AppText>
+                  <AppText
+                    variant="caption"
+                    className={`mt-1 ${
                       isMe ? "text-indigo-200 text-right" : "text-white/30"
                     }`}
                   >
                     {getTimeAgo(msg.createdAt)}
-                  </Text>
+                  </AppText>
                 </View>
               </View>
             );
@@ -172,6 +174,7 @@ export default function TradeChatScreen() {
           <View className="flex-1 bg-white/10 border border-white/10 rounded-2xl px-4 py-3">
             <TextInput
               className="text-white max-h-32"
+              style={{ fontFamily: 'Outfit_400Regular' }}
               placeholder="Type message..."
               placeholderTextColor="rgba(255,255,255,0.3)"
               value={message}

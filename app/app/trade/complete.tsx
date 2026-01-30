@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Animated,
 } from "react-native";
+import { AppText } from "@/components/ui/AppText";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { useMutation } from "@apollo/client";
 import { RATE_TRADE_MUTATION } from "@/graphql/mutations";
@@ -89,98 +90,98 @@ export default function TradeCompleteScreen() {
                 colors={["#10b981", "#059669"]}
                 className="w-32 h-32 rounded-full items-center justify-center mb-4"
               >
-                <Text className="text-white text-6xl">✓</Text>
+                <AppText className="text-white text-6xl">✓</AppText>
               </LinearGradient>
             </Animated.View>
 
             {/* Confetti Effect */}
             <View className="absolute top-12 left-0 right-0 flex-row justify-around">
-              <Text className="text-2xl">🎉</Text>
-              <Text className="text-2xl">✨</Text>
-              <Text className="text-2xl">🎊</Text>
-              <Text className="text-2xl">⭐</Text>
+              <AppText className="text-2xl">🎉</AppText>
+              <AppText className="text-2xl">✨</AppText>
+              <AppText className="text-2xl">🎊</AppText>
+              <AppText className="text-2xl">⭐</AppText>
             </View>
 
-            <Text className="text-3xl font-bold text-white mb-1">
+            <AppText weight="bold" className="text-3xl text-white mb-1">
               Trade Completed!
-            </Text>
-            <Text className="text-white/40 mb-8">Successfully exchanged</Text>
+            </AppText>
+            <AppText className="text-white/40 mb-8">Successfully exchanged</AppText>
 
             {/* Amount Display */}
             <View className="bg-white/5 border border-white/10 rounded-2xl p-6 w-full mb-6">
               <View className="flex-row items-center justify-center mb-2">
-                <Text className="text-2xl font-bold text-white">
+                <AppText weight="bold" className="text-2xl text-white">
                   {formatCrypto(trade.cryptoAmount, trade.cryptoAsset)}
-                </Text>
-                <Text className="text-2xl text-white/40 mx-3">↔</Text>
-                <Text className="text-2xl font-bold text-white">
+                </AppText>
+                <AppText className="text-2xl text-white/40 mx-3">↔</AppText>
+                <AppText weight="bold" className="text-2xl text-white">
                   {formatCurrency(trade.fiatAmount, trade.fiatCurrency)}
-                </Text>
+                </AppText>
               </View>
-              <Text className="text-sm text-white/40 text-center">
+              <AppText variant="caption" className="text-white/40 text-center">
                 Rate: {formatCurrency(trade.rate, trade.fiatCurrency)}/
                 {trade.cryptoAsset}
-              </Text>
+              </AppText>
             </View>
 
             {/* Summary Card */}
             <View className="bg-white/5 border border-white/10 rounded-2xl p-6 w-full mb-6">
-              <Text className="font-semibold text-white mb-4">Summary</Text>
+              <AppText weight="semibold" className="text-white mb-4">Summary</AppText>
 
               <View className="space-y-3">
                 <View className="flex-row justify-between">
-                  <Text className="text-white/60">Trade ID</Text>
-                  <Text className="font-medium text-white">
+                  <AppText className="text-white/60">Trade ID</AppText>
+                  <AppText weight="medium" className="text-white">
                     #{trade.id.slice(0, 8)}
-                  </Text>
+                  </AppText>
                 </View>
                 <View className="flex-row justify-between">
-                  <Text className="text-white/60">Completed</Text>
-                  <Text className="font-medium text-white">Just now</Text>
+                  <AppText className="text-white/60">Completed</AppText>
+                  <AppText weight="medium" className="text-white">Just now</AppText>
                 </View>
                 <View className="flex-row justify-between">
-                  <Text className="text-white/60">
+                  <AppText className="text-white/60">
                     Fee ({trade.feePercentage * 100}%)
-                  </Text>
-                  <Text className="font-medium text-white">
+                  </AppText>
+                  <AppText weight="medium" className="text-white">
                     {formatCurrency(trade.fee, trade.fiatCurrency)}
-                  </Text>
+                  </AppText>
                 </View>
                 <View className="border-t border-white/10 pt-3 flex-row justify-between">
-                  <Text className="font-semibold text-white">Net received</Text>
-                  <Text className="font-bold text-green-400 text-lg">
+                  <AppText weight="semibold" className="text-white">Net received</AppText>
+                  <AppText weight="bold" className="text-green-400 text-lg">
                     {formatCurrency(trade.netReceived, trade.fiatCurrency)}
-                  </Text>
+                  </AppText>
                 </View>
               </View>
             </View>
 
             {/* Rate Experience */}
             <View className="bg-indigo-500/10 border border-indigo-500/20 rounded-2xl p-6 w-full mb-6">
-              <Text className="font-semibold text-white mb-4">
+              <AppText weight="semibold" className="text-white mb-4">
                 Traded with {trade.counterparty.username}
-              </Text>
+              </AppText>
 
-              <Text className="text-white/60 mb-3">Rate your experience</Text>
+              <AppText className="text-white/60 mb-3">Rate your experience</AppText>
 
               <View className="flex-row justify-center mb-4 space-x-2">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <TouchableOpacity key={star} onPress={() => setRating(star)}>
-                    <Text
+                    <AppText
                       className={`text-4xl ${rating >= star ? "" : "opacity-30"}`}
                     >
                       ⭐
-                    </Text>
+                    </AppText>
                   </TouchableOpacity>
                 ))}
               </View>
 
               {rating > 0 && (
                 <View className="bg-white/5 rounded-lg p-3">
-                  <Text className="text-white/60 text-sm mb-2">
+                  <AppText variant="caption" className="text-white/60 mb-2">
                     Optional feedback
-                  </Text>
-                  <Text className="text-white/40 italic">
+                  </AppText>
+                  <AppText className="text-white/40 italic">
                     {rating === 5
                       ? "Excellent!"
                       : rating === 4
@@ -188,7 +189,7 @@ export default function TradeCompleteScreen() {
                         : rating === 3
                           ? "Okay"
                           : "Could be better"}
-                  </Text>
+                  </AppText>
                 </View>
               )}
             </View>
@@ -200,14 +201,14 @@ export default function TradeCompleteScreen() {
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 1 }}
             >
-              <Text className="text-white font-bold text-lg mb-4">
+              <AppText weight="bold" className="text-white text-lg mb-4">
                 You've completed 23 trades! 🎊
-              </Text>
+              </AppText>
 
               <View className="bg-white/20 rounded-lg p-4 mb-3">
-                <Text className="text-white text-sm mb-2">
+                <AppText className="text-white text-sm mb-2">
                   Progress to Gold tier
-                </Text>
+                </AppText>
                 <View className="h-3 bg-white/30 rounded-full overflow-hidden mb-2">
                   <View
                     className="h-full bg-yellow-400 rounded-full"
@@ -215,18 +216,18 @@ export default function TradeCompleteScreen() {
                   />
                 </View>
                 <View className="flex-row justify-between">
-                  <Text className="text-white text-xs">687</Text>
-                  <Text className="text-white text-xs">750 (Gold)</Text>
+                  <AppText variant="caption" className="text-white">687</AppText>
+                  <AppText variant="caption" className="text-white">750 (Gold)</AppText>
                 </View>
               </View>
 
               <View className="bg-white/20 rounded-lg p-3">
-                <Text className="text-white font-semibold">
+                <AppText weight="semibold" className="text-white">
                   63 points to Gold tier!
-                </Text>
-                <Text className="text-white/80 text-sm">
+                </AppText>
+                <AppText variant="caption" className="text-white/80">
                   Complete 5 more trades to unlock
-                </Text>
+                </AppText>
               </View>
             </LinearGradient>
 
@@ -239,9 +240,9 @@ export default function TradeCompleteScreen() {
                   colors={["#10b981", "#059669"]}
                   className="rounded-2xl py-4"
                 >
-                  <Text className="text-white font-bold text-center text-lg">
+                  <AppText weight="bold" className="text-white text-center text-lg">
                     Trade Again
-                  </Text>
+                  </AppText>
                 </LinearGradient>
               </TouchableOpacity>
 
@@ -251,15 +252,15 @@ export default function TradeCompleteScreen() {
                   /* Open Solscan */
                 }}
               >
-                <Text className="text-white/70 font-semibold text-center">
+                <AppText weight="semibold" className="text-white/70 text-center">
                   View Transaction on Solscan
-                </Text>
+                </AppText>
               </TouchableOpacity>
 
               <TouchableOpacity className="border-2 border-indigo-500/50 rounded-2xl py-4">
-                <Text className="text-indigo-400 font-semibold text-center">
+                <AppText weight="semibold" className="text-indigo-400 text-center">
                   Share 🔗
-                </Text>
+                </AppText>
               </TouchableOpacity>
             </View>
           </View>
